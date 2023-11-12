@@ -1,7 +1,7 @@
 package br.com.educatech.EducaTech.controllers;
 
-import br.com.educatech.EducaTech.dtos.UsuarioDTOIn;
-import br.com.educatech.EducaTech.dtos.UsuarioDTOOut;
+import br.com.educatech.EducaTech.dtos.usuario.UsuarioDTOIn;
+import br.com.educatech.EducaTech.dtos.usuario.UsuarioDTOOut;
 import br.com.educatech.EducaTech.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;

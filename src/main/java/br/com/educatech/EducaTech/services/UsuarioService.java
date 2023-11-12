@@ -1,7 +1,7 @@
 package br.com.educatech.EducaTech.services;
 
-import br.com.educatech.EducaTech.dtos.UsuarioDTOIn;
-import br.com.educatech.EducaTech.dtos.UsuarioDTOOut;
+import br.com.educatech.EducaTech.dtos.usuario.UsuarioDTOIn;
+import br.com.educatech.EducaTech.dtos.usuario.UsuarioDTOOut;
 import br.com.educatech.EducaTech.model.Usuario;
 import br.com.educatech.EducaTech.repositories.UsuarioRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;

@@ -1,4 +1,4 @@
-package br.com.educatech.EducaTech.dtos;
+package br.com.educatech.EducaTech.dtos.usuario;
 
 import br.com.educatech.EducaTech.enums.TipoUsuarioEnum;
 

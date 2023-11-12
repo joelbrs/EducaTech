@@ -1,4 +1,4 @@
-package br.com.educatech.EducaTech.dtos;
+package br.com.educatech.EducaTech.dtos.usuario;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
