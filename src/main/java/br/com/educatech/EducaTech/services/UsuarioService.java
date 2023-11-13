@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +18,12 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -37,6 +40,7 @@ public class UsuarioService {
     @Transactional
     public UsuarioDTOOut insert(UsuarioDTOIn dto) {
         Usuario u = usuarioRepository.save(modelMapper.map(dto, Usuario.class));
+        u.setSenha(passwordEncoder.encode(u.getSenha()));
         return modelMapper.map(u, UsuarioDTOOut.class);
     }
 
