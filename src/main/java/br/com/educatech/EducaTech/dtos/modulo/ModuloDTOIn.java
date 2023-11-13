@@ -1,11 +1,21 @@
 package br.com.educatech.EducaTech.dtos.modulo;
 
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class ModuloDTOIn {
+
+    @NotBlank
     private String titulo;
+
+    @NotBlank
     private String descricao;
+
+    @NotNull
     private Integer ordem;
+
+    @NotNull
     private Long curso;
 
     public ModuloDTOIn() {}
