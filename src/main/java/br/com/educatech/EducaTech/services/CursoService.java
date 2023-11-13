@@ -2,6 +2,7 @@ package br.com.educatech.EducaTech.services;
 
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOIn;
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
+import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
@@ -20,10 +21,12 @@ public class CursoService {
 
     private final CursoRepository cursoRepository;
     private final ModelMapper modelMapper;
+    private final ModuloService moduloService;
 
-    public CursoService(CursoRepository cursoRepository, ModelMapper modelMapper) {
+    public CursoService(CursoRepository cursoRepository, ModelMapper modelMapper, ModuloService moduloService) {
         this.cursoRepository = cursoRepository;
         this.modelMapper = modelMapper;
+        this.moduloService = moduloService;
     }
 
     @Transactional(readOnly = true)
@@ -67,6 +70,11 @@ public class CursoService {
     public void delete(Long id) {
         try {
             Curso curso = cursoRepository.getReferenceById(id);
+            List<ModuloDTOOut> modulos = moduloService.findAllByCourse(id);
+
+            for (ModuloDTOOut m : modulos) {
+                moduloService.delete(m.getId());
+            }
 
             cursoRepository.delete(curso);
         }

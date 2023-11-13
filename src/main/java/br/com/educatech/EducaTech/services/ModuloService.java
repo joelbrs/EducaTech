@@ -1,10 +1,11 @@
 package br.com.educatech.EducaTech.services;
 
-import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
+import br.com.educatech.EducaTech.dtos.aula.AulaDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOIn;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Modulo;
+import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.repositories.ModuloRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,12 +23,14 @@ public class ModuloService {
 
     private final ModuloRepository moduloRepository;
     private final ModelMapper modelMapper;
-    private final CursoService cursoService;
+    private final CursoRepository cursoRepository;
+    private final AulaService aulaService;
 
-    public ModuloService(ModuloRepository moduloRepository, ModelMapper modelMapper, CursoService cursoService) {
+    public ModuloService(ModuloRepository moduloRepository, ModelMapper modelMapper, CursoRepository cursoRepository, AulaService aulaService) {
         this.moduloRepository = moduloRepository;
         this.modelMapper = modelMapper;
-        this.cursoService = cursoService;
+        this.cursoRepository = cursoRepository;
+        this.aulaService = aulaService;
     }
 
     @Transactional(readOnly = true)
@@ -62,7 +65,7 @@ public class ModuloService {
 
     @Transactional
     public ModuloDTOOut insert(ModuloDTOIn dto) {
-        Curso curso = modelMapper.map(cursoService.findById(dto.getCurso()), Curso.class);
+        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso não encontrado!")), Curso.class);
         Modulo modulo = modelMapper.map(dto, Modulo.class);
         modulo.setCurso(curso);
 
@@ -86,6 +89,12 @@ public class ModuloService {
     public void delete(Long id) {
         try {
             Modulo modulo = moduloRepository.getReferenceById(id);
+            List<AulaDTOOut> aulas = aulaService.findAllByCourseAndModule(modulo.getCurso().getId(), id);
+
+            for (AulaDTOOut a : aulas) {
+                aulaService.delete(a.getCurso().getId(), a.getModulo().getId(), a.getOrdem());
+            }
+
             moduloRepository.delete(modulo);
         }
         catch (EntityNotFoundException e) {
