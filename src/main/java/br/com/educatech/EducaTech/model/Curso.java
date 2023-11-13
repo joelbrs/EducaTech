@@ -19,6 +19,9 @@ public class Curso {
     private BigDecimal cargaHoraria;
     private String imagem;
 
+    @OneToMany(mappedBy = "id.curso")
+    private Set<Aula> aulas = new HashSet<>();
+
     @OneToMany(mappedBy = "curso")
     private Set<Modulo> modulos = new HashSet<>();
 ;
@@ -58,6 +61,10 @@ public class Curso {
 
     public Set<Modulo> getModulos() {
         return Collections.unmodifiableSet(modulos);
+    }
+
+    public Set<Aula> getAulas() {
+        return Collections.unmodifiableSet(aulas);
     }
 
     @Override

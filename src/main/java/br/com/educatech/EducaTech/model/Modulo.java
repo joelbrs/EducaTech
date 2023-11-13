@@ -3,7 +3,10 @@ package br.com.educatech.EducaTech.model;
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
 import jakarta.persistence.*;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_modulo")
@@ -19,6 +22,9 @@ public class Modulo {
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
+
+    @OneToMany(mappedBy = "id.modulo")
+    private Set<Aula> aulas = new HashSet<>();
 
     public Modulo() {}
 
@@ -56,6 +62,10 @@ public class Modulo {
 
     public Curso getCurso() {
         return curso;
+    }
+
+    public Set<Aula> getAulas() {
+        return Collections.unmodifiableSet(aulas);
     }
 
     @Override
