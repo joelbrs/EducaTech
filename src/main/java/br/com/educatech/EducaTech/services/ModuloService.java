@@ -1,7 +1,9 @@
 package br.com.educatech.EducaTech.services;
 
+import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOIn;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
+import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Modulo;
 import br.com.educatech.EducaTech.repositories.ModuloRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
@@ -20,15 +22,18 @@ public class ModuloService {
 
     private final ModuloRepository moduloRepository;
     private final ModelMapper modelMapper;
+    private final CursoService cursoService;
 
-    public ModuloService(ModuloRepository moduloRepository, ModelMapper modelMapper) {
+    public ModuloService(ModuloRepository moduloRepository, ModelMapper modelMapper, CursoService cursoService) {
         this.moduloRepository = moduloRepository;
         this.modelMapper = modelMapper;
+        this.cursoService = cursoService;
     }
 
     @Transactional(readOnly = true)
     public List<ModuloDTOOut> findAll() {
         List<Modulo> modulos = moduloRepository.findAll();
+
         return modulos.stream().map(m -> modelMapper.map(m, ModuloDTOOut.class)).collect(Collectors.toList());
     }
 
@@ -36,6 +41,12 @@ public class ModuloService {
     public Page<ModuloDTOOut> findAllPaged(String titulo, Pageable pageable) {
         Page<Modulo> modulos = moduloRepository.findAllPaged(titulo, pageable);
         return modulos.map(m -> modelMapper.map(m, ModuloDTOOut.class));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ModuloDTOOut> findAllByCourse(Long id) {
+        List<Modulo> modulos = moduloRepository.findAllByIdCourse(id);
+        return modulos.stream().map(m -> modelMapper.map(m, ModuloDTOOut.class)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -51,8 +62,11 @@ public class ModuloService {
 
     @Transactional
     public ModuloDTOOut insert(ModuloDTOIn dto) {
-        Modulo modulo = moduloRepository.save(modelMapper.map(dto, Modulo.class));
-        return modelMapper.map(modulo, ModuloDTOOut.class);
+        Curso curso = modelMapper.map(cursoService.findById(dto.getCurso()), Curso.class);
+        Modulo modulo = modelMapper.map(dto, Modulo.class);
+        modulo.setCurso(curso);
+
+        return modelMapper.map(moduloRepository.save(modulo), ModuloDTOOut.class);
     }
 
     @Transactional

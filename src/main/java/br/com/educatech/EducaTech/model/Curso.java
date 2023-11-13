@@ -3,7 +3,10 @@ package br.com.educatech.EducaTech.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_curso")
@@ -16,6 +19,9 @@ public class Curso {
     private BigDecimal cargaHoraria;
     private String imagem;
 
+    @OneToMany(mappedBy = "curso")
+    private Set<Modulo> modulos = new HashSet<>();
+;
     public Curso() {}
 
     public Long getId() {
@@ -48,6 +54,10 @@ public class Curso {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public Set<Modulo> getModulos() {
+        return Collections.unmodifiableSet(modulos);
     }
 
     @Override

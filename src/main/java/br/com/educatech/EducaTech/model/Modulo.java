@@ -1,5 +1,6 @@
 package br.com.educatech.EducaTech.model;
 
+import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -14,6 +15,10 @@ public class Modulo {
     private String titulo;
     private String descricao;
     private Integer ordem;
+
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
 
     public Modulo() {}
 
@@ -49,6 +54,10 @@ public class Modulo {
         this.ordem = ordem;
     }
 
+    public Curso getCurso() {
+        return curso;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,5 +69,9 @@ public class Modulo {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 }

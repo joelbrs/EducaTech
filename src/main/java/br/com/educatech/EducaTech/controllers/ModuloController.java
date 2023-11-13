@@ -32,6 +32,11 @@ public class ModuloController {
         return ResponseEntity.ok(moduloService.findAll());
     }
 
+    @GetMapping(value = "/curso/{idCurso}")
+    public ResponseEntity<List<ModuloDTOOut>> findAllByCourse(@PathVariable Long idCurso) {
+        return ResponseEntity.ok(moduloService.findAllByCourse(idCurso));
+    }
+
     @GetMapping(value = "/next-order")
     public ResponseEntity<Integer> findNextOrder() throws Exception {
         return ResponseEntity.ok(moduloService.findNextOrder());
