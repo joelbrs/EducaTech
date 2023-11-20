@@ -6,6 +6,7 @@ import br.com.educatech.EducaTech.model.Aula;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Modulo;
 import br.com.educatech.EducaTech.repositories.AulaRepository;
+import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.repositories.ModuloRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,13 +25,13 @@ public class AulaService {
 
     private final AulaRepository aulaRepository;
     private final ModelMapper modelMapper;
-    private final CursoService cursoService;
+    private final CursoRepository cursoRepository;
     private final ModuloRepository moduloRepository;
 
-    public AulaService(AulaRepository aulaRepository, ModelMapper modelMapper, CursoService cursoService, ModuloRepository moduloRepository) {
+    public AulaService(AulaRepository aulaRepository, ModelMapper modelMapper, CursoRepository cursoRepository, ModuloRepository moduloRepository) {
         this.aulaRepository = aulaRepository;
         this.modelMapper = modelMapper;
-        this.cursoService = cursoService;
+        this.cursoRepository = cursoRepository;
         this.moduloRepository = moduloRepository;
     }
 
@@ -75,7 +76,7 @@ public class AulaService {
 
     @Transactional
     public AulaDTOOut insert(AulaDTOIn dto) {
-        Curso curso = modelMapper.map(cursoService.findById(dto.getCurso()), Curso.class);
+        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso nao encontrado, ID: " + dto.getCurso())), Curso.class);
         Modulo modulo = modelMapper.map(moduloRepository.findById(dto.getModulo()).orElseThrow(()->new RecursoNaoEncontradoException("Módulo não encontrado!")), Modulo.class);
 
         Aula aula = modelMapper.map(dto, Aula.class);
@@ -87,7 +88,7 @@ public class AulaService {
 
     @Transactional
     public AulaDTOOut update(Long idCurso, Long idModulo, Integer ordem, AulaDTOIn dto) {
-        Curso curso = modelMapper.map(cursoService.findById(dto.getCurso()), Curso.class);
+        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso nao encontrado, ID: " + dto.getCurso())), Curso.class);
         Modulo modulo = modelMapper.map(moduloRepository.findById(dto.getModulo()).orElseThrow(()->new RecursoNaoEncontradoException("Módulo não encontrado!")), Modulo.class);
 
         Aula aula = modelMapper.map(findByCourseModuleAndOrder(idCurso, idModulo, ordem), Aula.class);
