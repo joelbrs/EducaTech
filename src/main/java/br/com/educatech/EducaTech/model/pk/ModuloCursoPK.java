@@ -2,9 +2,7 @@ package br.com.educatech.EducaTech.model.pk;
 
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Modulo;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,7 +18,18 @@ public class ModuloCursoPK implements Serializable {
     @JoinColumn(name = "modulo_id")
     private Modulo modulo;
 
+    @Column(name = "ordem")
+    private Integer ordem;
+
     public ModuloCursoPK() {}
+
+    public Integer getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(Integer ordem) {
+        this.ordem = ordem;
+    }
 
     public Curso getCurso() {
         return curso;

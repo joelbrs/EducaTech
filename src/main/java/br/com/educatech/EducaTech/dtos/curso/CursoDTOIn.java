@@ -10,6 +10,9 @@ public class CursoDTOIn {
     @NotBlank
     private String titulo;
 
+    @NotBlank
+    private String descricao;
+
     @NotNull
     private BigDecimal cargaHoraria;
     private String imagem;
@@ -22,6 +25,14 @@ public class CursoDTOIn {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public BigDecimal getCargaHoraria() {

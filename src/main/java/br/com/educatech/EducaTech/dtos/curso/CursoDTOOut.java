@@ -6,8 +6,11 @@ public class CursoDTOOut {
 
     private Long id;
     private String titulo;
+    private String descricao;
     private BigDecimal cargaHoraria;
     private String imagem;
+    private Integer qtdAulas = 0;
+    private Integer qtdModulos = 0;
 
     public CursoDTOOut() {}
 
@@ -27,6 +30,14 @@ public class CursoDTOOut {
         this.titulo = titulo;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public BigDecimal getCargaHoraria() {
         return cargaHoraria;
     }
@@ -41,5 +52,21 @@ public class CursoDTOOut {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public Integer getQtdAulas() {
+        return qtdAulas;
+    }
+
+    public void setQtdAulas(Integer qtdAulas) {
+        this.qtdAulas = qtdAulas;
+    }
+
+    public Integer getQtdModulos() {
+        return qtdModulos;
+    }
+
+    public void setQtdModulos(Integer qtdModulos) {
+        this.qtdModulos = qtdModulos;
     }
 }

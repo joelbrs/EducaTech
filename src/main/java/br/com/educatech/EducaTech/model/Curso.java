@@ -16,6 +16,7 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
+    private String descricao;
     private BigDecimal cargaHoraria;
     private String imagem;
 
@@ -41,6 +42,14 @@ public class Curso {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public BigDecimal getCargaHoraria() {

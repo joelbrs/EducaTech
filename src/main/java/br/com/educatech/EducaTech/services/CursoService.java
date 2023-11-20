@@ -4,6 +4,8 @@ import br.com.educatech.EducaTech.dtos.curso.CursoDTOIn;
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.model.Curso;
+import br.com.educatech.EducaTech.model.Modulo;
+import br.com.educatech.EducaTech.repositories.AulaRepository;
 import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CursoService {
@@ -22,22 +23,34 @@ public class CursoService {
     private final CursoRepository cursoRepository;
     private final ModelMapper modelMapper;
     private final ModuloService moduloService;
+    private final AulaRepository aulaRepository;
 
-    public CursoService(CursoRepository cursoRepository, ModelMapper modelMapper, ModuloService moduloService) {
+    public CursoService(CursoRepository cursoRepository, ModelMapper modelMapper, ModuloService moduloService, AulaRepository aulaRepository) {
         this.cursoRepository = cursoRepository;
         this.modelMapper = modelMapper;
         this.moduloService = moduloService;
+        this.aulaRepository = aulaRepository;
     }
 
     @Transactional(readOnly = true)
     public List<CursoDTOOut> findAll() {
         List<Curso> cursos = cursoRepository.findAll();
-        return cursos.stream().map(c -> modelMapper.map(c, CursoDTOOut.class)).collect(Collectors.toList());
+        List<CursoDTOOut> dtos = cursos.stream().map(c -> modelMapper.map(c, CursoDTOOut.class)).toList();
+
+        for (CursoDTOOut c : dtos) {
+            List<ModuloDTOOut> modulos = moduloService.findAllByCourse(c.getId());
+            c.setQtdModulos(modulos.size());
+
+            for (ModuloDTOOut m : modulos) {
+                c.setQtdAulas(c.getQtdAulas() + aulaRepository.findAllByCourseAndModule(c.getId(), m.getId()).size());
+            }
+        }
+
+        return dtos;
     }
 
-    @Transactional(readOnly = true)
-    public Page<CursoDTOOut> findAllPaged(String nome, Pageable pageable) {
-        Page<Curso> cursos = cursoRepository.findAllPaged(nome, pageable);
+    public Page<CursoDTOOut> findAllPaged(String titulo, Pageable pageable) {
+        Page<Curso> cursos = cursoRepository.findAllPaged(titulo, pageable);
         return cursos.map(c -> modelMapper.map(c, CursoDTOOut.class));
     }
 

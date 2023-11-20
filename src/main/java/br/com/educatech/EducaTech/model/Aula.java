@@ -14,17 +14,16 @@ public class Aula {
     private String titulo;
     private String descricao;
     private Boolean assistida;
-    private Integer ordem;
 
     public Aula() {}
 
     public Aula(Curso curso, Modulo modulo, String titulo, String descricao, Boolean assistida, Integer ordem) {
         setCurso(curso);
         setModulo(modulo);
+        setOrdem(ordem);
         this.titulo = titulo;
         this.descricao = descricao;
         this.assistida = assistida;
-        this.ordem = ordem;
     }
 
     public Curso getCurso() {
@@ -68,11 +67,11 @@ public class Aula {
     }
 
     public Integer getOrdem() {
-        return ordem;
+        return id.getOrdem();
     }
 
     public void setOrdem(Integer ordem) {
-        this.ordem = ordem;
+        this.id.setOrdem(ordem);
     }
 
     @Override

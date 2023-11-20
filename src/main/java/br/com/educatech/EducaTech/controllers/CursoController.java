@@ -27,9 +27,9 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CursoDTOOut>> findAllPaged(@RequestParam(required = false) String nome,
+    public ResponseEntity<Page<CursoDTOOut>> findAllPaged(@RequestParam(required = false) String titulo,
                                                           Pageable pageable) {
-        return ResponseEntity.ok(cursoService.findAllPaged(nome, pageable));
+        return ResponseEntity.ok(cursoService.findAllPaged(titulo, pageable));
     }
 
     @GetMapping(value = "/{id}")
