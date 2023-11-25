@@ -24,6 +24,13 @@ public class Usuario {
 
     public Usuario() {}
 
+    public Usuario(String cpf, String nome, String email, String senha) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+
     public Long getId() {
         return id;
     }

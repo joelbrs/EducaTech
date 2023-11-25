@@ -17,8 +17,9 @@ public class UsuarioDTOIn {
     @NotBlank
     private String email;
 
-    @NotBlank
-    private String senha;
+    private String senhaAtual;
+
+    private String senhaNova;
 
     public UsuarioDTOIn() {}
 
@@ -46,11 +47,19 @@ public class UsuarioDTOIn {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getSenhaAtual() {
+        return senhaAtual;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSenhaAtual(String senhaAtual) {
+        this.senhaAtual = senhaAtual;
+    }
+
+    public String getSenhaNova() {
+        return senhaNova;
+    }
+
+    public void setSenhaNova(String senhaNova) {
+        this.senhaNova = senhaNova;
     }
 }

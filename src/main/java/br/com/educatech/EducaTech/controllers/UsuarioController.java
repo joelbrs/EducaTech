@@ -43,7 +43,7 @@ public class UsuarioController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UsuarioDTOOut> update(@PathVariable Long id, @RequestBody @Valid UsuarioDTOIn dto) {
+    public ResponseEntity<UsuarioDTOOut> update(@PathVariable Long id, @RequestBody @Valid UsuarioDTOIn dto) throws Exception {
         return ResponseEntity.ok(usuarioService.update(id, dto));
     }
 }

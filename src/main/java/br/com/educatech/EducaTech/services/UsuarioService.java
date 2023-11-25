@@ -9,7 +9,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,9 +40,8 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioDTOOut insert(UsuarioDTOIn dto) {
-        Usuario u = usuarioRepository.save(modelMapper.map(dto, Usuario.class));
-        //u.setSenha(passwordEncoder.encode(u.getSenha()));
-        return modelMapper.map(u, UsuarioDTOOut.class);
+        Usuario u = new Usuario(dto.getCpf(), dto.getNome(), dto.getEmail(), dto.getSenhaNova());
+        return modelMapper.map(usuarioRepository.save(u), UsuarioDTOOut.class);
     }
 
     public UsuarioDTOOut login(String email, String senha) throws Exception{
@@ -56,16 +54,28 @@ public class UsuarioService {
     }
 
     @Transactional
-    public UsuarioDTOOut update(Long id, UsuarioDTOIn dto) {
+    public UsuarioDTOOut update(Long id, UsuarioDTOIn dto) throws Exception {
         try {
             Usuario usuario = usuarioRepository.getReferenceById(id);
             usuario.setCpf(dto.getCpf());
             usuario.setNome(dto.getNome());
+
+            if (dto.getSenhaNova() != null && !dto.getSenhaNova().isBlank()) {
+                usuario = updatePassword(dto.getSenhaAtual(), dto.getSenhaNova(), usuario);
+            }
 
             return modelMapper.map(usuarioRepository.save(usuario), UsuarioDTOOut.class);
         }
         catch (EntityNotFoundException e) {
             throw new RecursoNaoEncontradoException(id);
         }
+    }
+
+    public Usuario updatePassword(String senhaAtual, String senhaNova, Usuario usuario) throws Exception {
+        if (!usuario.getSenha().equals(senhaAtual)) {
+            throw new Exception("Senha antiga nao corresponde a cadastrada!");
+        }
+        usuario.setSenha(senhaNova);
+        return usuario;
     }
 }
