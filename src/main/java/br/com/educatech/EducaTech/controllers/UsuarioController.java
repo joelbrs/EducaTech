@@ -26,6 +26,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.findAllPaged(cpf, nome, pageable));
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<UsuarioDTOOut> login(@RequestParam(required = true) String email,
+                                      @RequestParam(required = true) String senha) throws Exception {
+        return ResponseEntity.ok(usuarioService.login(email, senha));
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<UsuarioDTOOut> findById(@PathVariable Long id) {
         return ResponseEntity.ok(usuarioService.findById(id));

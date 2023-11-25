@@ -1,3 +1,5 @@
+INSERT INTO tb_usuario (cpf, nome, email, senha, tipo_usuario) VALUES ('60422410365', 'Educatech', 'admin@educatech.com', '12345', 2)
+
 INSERT INTO tb_curso (titulo, descricao, carga_horaria, imagem) VALUES ('Docker', 'Você vai aprender como criar, administrar ambientes isolados através de containers com o Docker', 80, 'https://cdn.vuetifyjs.com/images/john.jpg')
 INSERT INTO tb_curso (titulo, descricao, carga_horaria, imagem) VALUES ('Kubernetes', 'Aprenda a orquestrar e gerenciar aplicativos em contêineres com Kubernetes', 90, 'https://cdn.vuetifyjs.com/images/john.jpg');
 INSERT INTO tb_curso (titulo, descricao, carga_horaria, imagem) VALUES ('Python', 'Domine uma das linguagens mais populares e versáteis do mundo da programação', 100, 'https://cdn.vuetifyjs.com/images/john.jpg');

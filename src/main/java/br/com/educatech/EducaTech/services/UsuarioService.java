@@ -18,12 +18,10 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final ModelMapper modelMapper;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -37,11 +35,24 @@ public class UsuarioService {
         return modelMapper.map(usuario, UsuarioDTOOut.class);
     }
 
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email.split("\t")[0]).orElseThrow(() -> new RecursoNaoEncontradoException("Usuario nao encontrado!"));
+    }
+
     @Transactional
     public UsuarioDTOOut insert(UsuarioDTOIn dto) {
         Usuario u = usuarioRepository.save(modelMapper.map(dto, Usuario.class));
-        u.setSenha(passwordEncoder.encode(u.getSenha()));
+        //u.setSenha(passwordEncoder.encode(u.getSenha()));
         return modelMapper.map(u, UsuarioDTOOut.class);
+    }
+
+    public UsuarioDTOOut login(String email, String senha) throws Exception{
+        Usuario usuario = findByEmail(email);
+
+        if (!usuario.getSenha().equals(senha)) {
+            throw new Exception("Senha invalida!");
+        }
+        return modelMapper.map(usuario, UsuarioDTOOut.class);
     }
 
     @Transactional
