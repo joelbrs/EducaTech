@@ -57,7 +57,15 @@ public class CursoService {
 
     public CursoDTOOut findById(Long id) {
         Curso curso = cursoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id));
-        return modelMapper.map(curso, CursoDTOOut.class);
+        CursoDTOOut dto = modelMapper.map(curso, CursoDTOOut.class);
+
+        List<ModuloDTOOut> modulos = moduloService.findAllByCourse(id);
+        dto.setQtdModulos(modulos.size());
+
+        for (ModuloDTOOut m : modulos) {
+            dto.setQtdAulas(dto.getQtdAulas() + aulaRepository.findAllByCourseAndModule(dto.getId(), m.getId()).size());
+        }
+        return dto;
     }
 
     @Transactional
