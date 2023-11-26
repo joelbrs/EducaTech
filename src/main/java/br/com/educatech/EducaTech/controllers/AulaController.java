@@ -22,14 +22,10 @@ public class AulaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<AulaDTOOut>> findAllPaged(@RequestParam(required = false) String titulo,
-                                                         Pageable pageable) {
-        return ResponseEntity.ok(aulaService.findAllPaged(titulo, pageable));
-    }
-
-    @GetMapping(value = "/select")
-    public ResponseEntity<List<AulaDTOOut>> findAll() {
-        return ResponseEntity.ok(aulaService.findAll());
+    public ResponseEntity<List<AulaDTOOut>> findAll(@RequestParam(required = false) String titulo,
+                                                    @RequestParam(required = false) Long idCurso,
+                                                    @RequestParam(required = false) Long idModulo) {
+        return ResponseEntity.ok(aulaService.findAll(titulo, idCurso, idModulo));
     }
 
     @GetMapping(value = "/{idCurso}/{idModulo}")
@@ -44,9 +40,10 @@ public class AulaController {
         return ResponseEntity.ok(aulaService.findByCourseModuleAndOrder(idCurso, idModulo, ordem));
     }
 
-    @GetMapping(value = "/next-order")
-    public ResponseEntity<Integer> findNextOrder() throws Exception {
-        return ResponseEntity.ok(aulaService.findNextOrder());
+    @GetMapping(value = "/proxima-ordem/{idCurso}/{idModulo}")
+    public ResponseEntity<Integer> findNextOrder(@PathVariable Long idCurso,
+                                                 @PathVariable Long idModulo) {
+        return ResponseEntity.ok(aulaService.findNextOrder(idCurso, idModulo));
     }
 
     @PostMapping

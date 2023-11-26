@@ -54,8 +54,12 @@ public class ModuloService {
     }
 
     @Transactional(readOnly = true)
-    public Integer findNextOrder(Long idCurso) throws Exception {
-        Modulo modulo = moduloRepository.findModuleWithMaxOrder(idCurso).orElseThrow(Exception::new);
+    public Integer findNextOrder(Long idCurso) {
+        Modulo modulo = moduloRepository.findModuleWithMaxOrder(idCurso).orElse(null);
+
+        if (modulo == null) {
+            return 1;
+        }
         return modulo.getOrdem() + 1;
     }
 

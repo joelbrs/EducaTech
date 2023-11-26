@@ -36,15 +36,22 @@ public class AulaService {
     }
 
     @Transactional(readOnly = true)
-    public List<AulaDTOOut> findAll() {
+    public List<AulaDTOOut> findAll(String titulo, Long idCurso, Long idModulo) {
         List<Aula> aulas = aulaRepository.findAll();
-        return aulas.stream().map(a -> modelMapper.map(a, AulaDTOOut.class)).collect(Collectors.toList());
-    }
 
-    @Transactional(readOnly = true)
-    public Page<AulaDTOOut> findAllPaged(String titulo, Pageable pageable) {
-        Page<Aula> aulas = aulaRepository.findAllPaged(titulo, pageable);
-        return aulas.map(a -> modelMapper.map(a, AulaDTOOut.class));
+        if (titulo != null && !titulo.isBlank()) {
+            aulas = aulas.stream().filter(a -> a.getTitulo().toLowerCase().contains(titulo)).toList();
+        }
+
+        if (idCurso != null) {
+            aulas = aulas.stream().filter(a -> a.getCurso().getId().equals(idCurso)).toList();
+        }
+
+        if (idModulo != null) {
+            aulas = aulas.stream().filter(a -> a.getModulo().getId().equals(idModulo)).toList();
+        }
+
+        return aulas.stream().map(a -> modelMapper.map(a, AulaDTOOut.class)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -68,8 +75,12 @@ public class AulaService {
     }
 
     @Transactional(readOnly = true)
-    public Integer findNextOrder() throws Exception {
-        Aula aula = aulaRepository.findAulaWithMaxOrder().orElseThrow(Exception::new);
+    public Integer findNextOrder(Long idCurso, Long idModulo) {
+        Aula aula = aulaRepository.findAulaWithMaxOrder(idCurso, idModulo).orElse(null);
+
+        if (aula == null) {
+            return 1;
+        }
         return aula.getOrdem() + 1;
     }
 
