@@ -1,6 +1,6 @@
 package br.com.educatech.EducaTech.dtos.modulo;
 
-import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
+import br.com.educatech.EducaTech.dtos.material.MaterialDTOIn;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +17,8 @@ public class ModuloDTOIn {
 
     @NotNull
     private Long curso;
+
+    private MaterialDTOIn material;
 
     public ModuloDTOIn() {}
 
@@ -50,5 +52,13 @@ public class ModuloDTOIn {
 
     public void setCurso(Long curso) {
         this.curso = curso;
+    }
+
+    public MaterialDTOIn getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(MaterialDTOIn material) {
+        this.material = material;
     }
 }

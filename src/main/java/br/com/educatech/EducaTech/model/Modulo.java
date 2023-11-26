@@ -19,6 +19,10 @@ public class Modulo {
     private String descricao;
     private Integer ordem;
 
+    @OneToOne
+    @JoinColumn(name = "material_id")
+    private Material material;
+
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
@@ -66,6 +70,14 @@ public class Modulo {
 
     public Set<Aula> getAulas() {
         return Collections.unmodifiableSet(aulas);
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     @Override

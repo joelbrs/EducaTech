@@ -1,6 +1,7 @@
 package br.com.educatech.EducaTech.dtos.modulo;
 
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
+import br.com.educatech.EducaTech.dtos.material.MaterialDTOOut;
 
 public class ModuloDTOOut {
     private Long id;
@@ -8,6 +9,7 @@ public class ModuloDTOOut {
     private String descricao;
     private Integer ordem;
     private CursoDTOOut curso;
+    private MaterialDTOOut material;
 
     public ModuloDTOOut() {}
 
@@ -49,5 +51,13 @@ public class ModuloDTOOut {
 
     public void setCurso(CursoDTOOut curso) {
         this.curso = curso;
+    }
+
+    public MaterialDTOOut getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(MaterialDTOOut material) {
+        this.material = material;
     }
 }
