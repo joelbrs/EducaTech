@@ -12,12 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface ModuloRepository extends JpaRepository<Modulo, Long> {
-
-    @Query("SELECT m FROM Modulo m")
-    Page<Modulo> findAllPaged(String titulo, Pageable pageable);
-
-    @Query("SELECT m FROM Modulo m WHERE m.ordem = (SELECT MAX(m2.ordem) FROM Modulo m2)")
-    Optional<Modulo> findModuleWithMaxOrder();
+    @Query("SELECT m FROM Modulo m WHERE m.curso.id = :idCurso and m.ordem = (SELECT MAX(m2.ordem) FROM Modulo m2 where m2.curso.id = :idCurso)")
+    Optional<Modulo> findModuleWithMaxOrder(Long idCurso);
 
     @Query("SELECT m FROM Modulo m WHERE m.curso.id = :id")
     List<Modulo> findAllByIdCourse(Long id);

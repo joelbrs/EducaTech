@@ -21,15 +21,9 @@ public class CursoController {
         this.cursoService = cursoService;
     }
 
-    @GetMapping(value = "/select")
-    public ResponseEntity<List<CursoDTOOut>> findAll() {
-        return ResponseEntity.ok(cursoService.findAll());
-    }
-
     @GetMapping
-    public ResponseEntity<Page<CursoDTOOut>> findAllPaged(@RequestParam(required = false) String titulo,
-                                                          Pageable pageable) {
-        return ResponseEntity.ok(cursoService.findAllPaged(titulo, pageable));
+    public ResponseEntity<List<CursoDTOOut>> findAll(String titulo) {
+        return ResponseEntity.ok(cursoService.findAll(titulo));
     }
 
     @GetMapping(value = "/{id}")

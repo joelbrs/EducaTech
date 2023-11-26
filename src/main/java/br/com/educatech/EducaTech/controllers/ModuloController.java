@@ -22,14 +22,9 @@ public class ModuloController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ModuloDTOOut>> findAllPaged(@RequestParam(required = false) String titulo,
-                                                          Pageable pageable) {
-        return ResponseEntity.ok(moduloService.findAllPaged(titulo, pageable));
-    }
-
-    @GetMapping(value = "/select")
-    public ResponseEntity<List<ModuloDTOOut>> findAll() {
-        return ResponseEntity.ok(moduloService.findAll());
+    public ResponseEntity<List<ModuloDTOOut>> findAll(@RequestParam(required = false) String titulo,
+                                                      @RequestParam(required = false) Long idCurso) {
+        return ResponseEntity.ok(moduloService.findAll(titulo, idCurso));
     }
 
     @GetMapping(value = "/curso/{idCurso}")
@@ -37,9 +32,9 @@ public class ModuloController {
         return ResponseEntity.ok(moduloService.findAllByCourse(idCurso));
     }
 
-    @GetMapping(value = "/next-order")
-    public ResponseEntity<Integer> findNextOrder() throws Exception {
-        return ResponseEntity.ok(moduloService.findNextOrder());
+    @GetMapping(value = "/proxima-ordem/{idCurso}")
+    public ResponseEntity<Integer> findNextOrder(@PathVariable Long idCurso) throws Exception {
+        return ResponseEntity.ok(moduloService.findNextOrder(idCurso));
     }
 
     @GetMapping(value = "/{id}")

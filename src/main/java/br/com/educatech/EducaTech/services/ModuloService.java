@@ -34,16 +34,17 @@ public class ModuloService {
     }
 
     @Transactional(readOnly = true)
-    public List<ModuloDTOOut> findAll() {
-        List<Modulo> modulos = moduloRepository.findAll();
+    public List<ModuloDTOOut> findAll(String titulo, Long idCurso) {
+        List<ModuloDTOOut> modulos = moduloRepository.findAll().stream().map(m -> modelMapper.map(m, ModuloDTOOut.class)).toList();
 
-        return modulos.stream().map(m -> modelMapper.map(m, ModuloDTOOut.class)).collect(Collectors.toList());
-    }
+        if (titulo != null && !titulo.isBlank()) {
+            modulos = modulos.stream().filter(c -> c.getTitulo().toLowerCase().contains(titulo.toLowerCase())).toList();
+        }
 
-    @Transactional(readOnly = true)
-    public Page<ModuloDTOOut> findAllPaged(String titulo, Pageable pageable) {
-        Page<Modulo> modulos = moduloRepository.findAllPaged(titulo, pageable);
-        return modulos.map(m -> modelMapper.map(m, ModuloDTOOut.class));
+        if (idCurso != null) {
+            return modulos.stream().filter(c -> c.getCurso().getId().equals(idCurso)).toList();
+        }
+        return modulos;
     }
 
     @Transactional(readOnly = true)
@@ -53,8 +54,8 @@ public class ModuloService {
     }
 
     @Transactional(readOnly = true)
-    public Integer findNextOrder() throws Exception {
-        Modulo modulo = moduloRepository.findModuleWithMaxOrder().orElseThrow(Exception::new);
+    public Integer findNextOrder(Long idCurso) throws Exception {
+        Modulo modulo = moduloRepository.findModuleWithMaxOrder(idCurso).orElseThrow(Exception::new);
         return modulo.getOrdem() + 1;
     }
 

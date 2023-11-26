@@ -11,10 +11,12 @@ import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoExcept
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,7 +35,7 @@ public class CursoService {
     }
 
     @Transactional(readOnly = true)
-    public List<CursoDTOOut> findAll() {
+    public List<CursoDTOOut> findAll(String titulo) {
         List<Curso> cursos = cursoRepository.findAll();
         List<CursoDTOOut> dtos = cursos.stream().map(c -> modelMapper.map(c, CursoDTOOut.class)).toList();
 
@@ -46,12 +48,11 @@ public class CursoService {
             }
         }
 
-        return dtos;
-    }
+        if (titulo != null && !titulo.isBlank()) {
+            return dtos.stream().filter(c -> c.getTitulo().toLowerCase().contains(titulo.toLowerCase())).toList();
+        }
 
-    public Page<CursoDTOOut> findAllPaged(String titulo, Pageable pageable) {
-        Page<Curso> cursos = cursoRepository.findAllPaged(titulo, pageable);
-        return cursos.map(c -> modelMapper.map(c, CursoDTOOut.class));
+        return dtos;
     }
 
     public CursoDTOOut findById(Long id) {

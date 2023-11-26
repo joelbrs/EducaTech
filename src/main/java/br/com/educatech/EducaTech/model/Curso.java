@@ -18,6 +18,8 @@ public class Curso {
     private String titulo;
     private String descricao;
     private BigDecimal cargaHoraria;
+
+    @Column(columnDefinition = "TEXT")
     private String imagem;
 
     @OneToMany(mappedBy = "id.curso")
