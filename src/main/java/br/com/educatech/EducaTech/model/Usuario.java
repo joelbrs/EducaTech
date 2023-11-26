@@ -22,6 +22,9 @@ public class Usuario {
     private String senha;
     private Long tipoUsuario;
 
+    @OneToOne(mappedBy = "id.usuario")
+    private Progresso progresso;
+
     public Usuario() {}
 
     public Usuario(String cpf, String nome, String email, String senha) {
@@ -73,6 +76,14 @@ public class Usuario {
 
     public TipoUsuarioEnum getTipoUsuario() throws Exception {
         return TipoUsuarioEnum.valueOf(tipoUsuario);
+    }
+
+    public Progresso getProgresso() {
+        return progresso;
+    }
+
+    public void setProgresso(Progresso progresso) {
+        this.progresso = progresso;
     }
 
     @PrePersist

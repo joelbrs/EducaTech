@@ -27,7 +27,10 @@ public class Curso {
 
     @OneToMany(mappedBy = "curso")
     private Set<Modulo> modulos = new HashSet<>();
-;
+
+    @OneToOne(mappedBy = "id.curso")
+    private Progresso progresso;
+
     public Curso() {}
 
     public Long getId() {
@@ -76,6 +79,14 @@ public class Curso {
 
     public Set<Aula> getAulas() {
         return Collections.unmodifiableSet(aulas);
+    }
+
+    public Progresso getProgresso() {
+        return progresso;
+    }
+
+    public void setProgresso(Progresso progresso) {
+        this.progresso = progresso;
     }
 
     @Override
