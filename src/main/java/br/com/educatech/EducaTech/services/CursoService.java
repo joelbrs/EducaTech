@@ -4,19 +4,13 @@ import br.com.educatech.EducaTech.dtos.curso.CursoDTOIn;
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.model.Curso;
-import br.com.educatech.EducaTech.model.Modulo;
 import br.com.educatech.EducaTech.repositories.AulaRepository;
 import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

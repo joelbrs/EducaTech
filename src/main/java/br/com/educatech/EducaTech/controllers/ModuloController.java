@@ -1,5 +1,6 @@
 package br.com.educatech.EducaTech.controllers;
 
+import br.com.educatech.EducaTech.dtos.modulo.ModuloComAulasDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOIn;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.services.ModuloService;
@@ -30,6 +31,11 @@ public class ModuloController {
     @GetMapping(value = "/curso/{idCurso}")
     public ResponseEntity<List<ModuloDTOOut>> findAllByCourse(@PathVariable Long idCurso) {
         return ResponseEntity.ok(moduloService.findAllByCourse(idCurso));
+    }
+
+    @GetMapping(value = "/aulas/{idCurso}")
+    public ResponseEntity<List<ModuloComAulasDTOOut>> findAllByIdCourseWithClasses(@PathVariable Long idCurso) {
+        return ResponseEntity.ok(moduloService.findAllByIdCourseWithClasses(idCurso));
     }
 
     @GetMapping(value = "/proxima-ordem/{idCurso}")

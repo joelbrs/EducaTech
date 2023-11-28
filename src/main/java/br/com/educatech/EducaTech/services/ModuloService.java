@@ -1,6 +1,8 @@
 package br.com.educatech.EducaTech.services;
 
 import br.com.educatech.EducaTech.dtos.aula.AulaDTOOut;
+import br.com.educatech.EducaTech.dtos.aula.AulaSemModuloDTOOut;
+import br.com.educatech.EducaTech.dtos.modulo.ModuloComAulasDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOIn;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.model.Curso;
@@ -45,6 +47,16 @@ public class ModuloService {
 
         if (idCurso != null) {
             return modulos.stream().filter(c -> c.getCurso().getId().equals(idCurso)).toList();
+        }
+        return modulos;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ModuloComAulasDTOOut> findAllByIdCourseWithClasses(Long idCourse) {
+        List<ModuloComAulasDTOOut> modulos = findAll(null, null).stream().map(m -> modelMapper.map(m, ModuloComAulasDTOOut.class)).toList();
+
+        for (ModuloComAulasDTOOut m : modulos) {
+            m.setAulas(aulaService.findAllByCourseAndModule(idCourse, m.getId()).stream().map(a -> modelMapper.map(a, AulaSemModuloDTOOut.class)).toList());
         }
         return modulos;
     }
