@@ -19,7 +19,7 @@ public class Modulo {
     private String descricao;
     private Integer ordem;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id")
     private Material material;
 

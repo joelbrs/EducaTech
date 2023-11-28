@@ -2,7 +2,10 @@ package br.com.educatech.EducaTech.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_material")
@@ -16,8 +19,8 @@ public class Material {
     private String arquivo;
     private String nome;
 
-    @OneToOne(mappedBy = "material")
-    private Modulo modulo;
+    @OneToMany(mappedBy = "material")
+    private Set<Modulo> modulos;
 
     public Material() {}
 
@@ -45,12 +48,8 @@ public class Material {
         this.nome = nome;
     }
 
-    public Modulo getModulo() {
-        return modulo;
-    }
-
-    public void setModulo(Modulo modulo) {
-        this.modulo = modulo;
+    public Set<Modulo> getModulos() {
+        return Collections.unmodifiableSet(modulos);
     }
 
     @Override
