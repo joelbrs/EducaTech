@@ -11,6 +11,7 @@ public class AulaDTOOut {
     private String descricao;
     private Boolean assistida;
     private Integer ordem;
+    private String video;
 
     public AulaDTOOut() {}
 
@@ -60,5 +61,13 @@ public class AulaDTOOut {
 
     public void setOrdem(Integer ordem) {
         this.ordem = ordem;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
     }
 }

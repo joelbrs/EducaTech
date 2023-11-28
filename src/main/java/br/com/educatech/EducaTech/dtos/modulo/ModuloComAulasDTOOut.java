@@ -1,6 +1,5 @@
 package br.com.educatech.EducaTech.dtos.modulo;
 
-import br.com.educatech.EducaTech.dtos.aula.AulaDTOOut;
 import br.com.educatech.EducaTech.dtos.aula.AulaSemModuloDTOOut;
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
 import br.com.educatech.EducaTech.dtos.material.MaterialDTOOut;

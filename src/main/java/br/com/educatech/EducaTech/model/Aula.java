@@ -14,16 +14,18 @@ public class Aula {
     private String titulo;
     private String descricao;
     private Boolean assistida;
+    private String video;
 
     public Aula() {}
 
-    public Aula(Curso curso, Modulo modulo, String titulo, String descricao, Boolean assistida, Integer ordem) {
+    public Aula(Curso curso, Modulo modulo, String titulo, String descricao, Boolean assistida, Integer ordem, String video) {
         setCurso(curso);
         setModulo(modulo);
         setOrdem(ordem);
         this.titulo = titulo;
         this.descricao = descricao;
         this.assistida = assistida;
+        this.video = video;
     }
 
     public Curso getCurso() {
@@ -72,6 +74,14 @@ public class Aula {
 
     public void setOrdem(Integer ordem) {
         this.id.setOrdem(ordem);
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     @Override

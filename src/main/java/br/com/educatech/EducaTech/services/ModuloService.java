@@ -56,7 +56,7 @@ public class ModuloService {
         List<ModuloComAulasDTOOut> modulos = findAll(null, null).stream().map(m -> modelMapper.map(m, ModuloComAulasDTOOut.class)).toList();
 
         for (ModuloComAulasDTOOut m : modulos) {
-            m.setAulas(aulaService.findAllByCourseAndModule(idCourse, m.getId()).stream().map(a -> modelMapper.map(a, AulaSemModuloDTOOut.class)).toList());
+            m.setAulas(aulaService.findAllByCourseAndModule(idCourse, m.getId()).stream().map(AulaSemModuloDTOOut::new).toList());
         }
         return modulos;
     }

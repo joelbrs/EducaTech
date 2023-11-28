@@ -66,7 +66,7 @@ public class AulaService {
         if (!aulas.isEmpty()) {
             for (Aula a : aulas) {
                 if (a.getOrdem().equals(ordem)) {
-                    Aula aula = new Aula(a.getCurso(), a.getModulo(), a.getTitulo(), a.getDescricao(), a.getAssistida(), a.getOrdem());
+                    Aula aula = new Aula(a.getCurso(), a.getModulo(), a.getTitulo(), a.getDescricao(), a.getAssistida(), a.getOrdem(), a.getVideo());
                     return modelMapper.map(aula, AulaDTOOut.class);
                 }
             }
