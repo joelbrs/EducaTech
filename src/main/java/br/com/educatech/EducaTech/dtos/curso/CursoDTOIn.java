@@ -1,5 +1,6 @@
 package br.com.educatech.EducaTech.dtos.curso;
 
+import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,6 +17,7 @@ public class CursoDTOIn {
     @NotNull
     private BigDecimal cargaHoraria;
     private String imagem;
+    private ModeloCertificadoDTO modeloCertificado;
 
     public CursoDTOIn() {}
 
@@ -49,5 +51,13 @@ public class CursoDTOIn {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public ModeloCertificadoDTO getModeloCertificado() {
+        return modeloCertificado;
+    }
+
+    public void setModeloCertificado(ModeloCertificadoDTO modeloCertificado) {
+        this.modeloCertificado = modeloCertificado;
     }
 }

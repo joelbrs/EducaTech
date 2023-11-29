@@ -28,8 +28,12 @@ public class Curso {
     @OneToMany(mappedBy = "curso")
     private Set<Modulo> modulos = new HashSet<>();
 
-    @OneToOne(mappedBy = "id.curso")
-    private ProgressoCurso progressoCurso;
+    @OneToMany(mappedBy = "id.curso")
+    private Set<ProgressoCurso> progressoCurso = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "certificado_id")
+    private Certificado modeloCertificado;
 
     public Curso() {}
 
@@ -81,12 +85,20 @@ public class Curso {
         return Collections.unmodifiableSet(aulas);
     }
 
-    public ProgressoCurso getProgresso() {
-        return progressoCurso;
+    public Set<ProgressoCurso> getProgressoCurso() {
+        return Collections.unmodifiableSet(progressoCurso);
     }
 
-    public void setProgresso(ProgressoCurso progressoCurso) {
+    public void setProgressoCurso(Set<ProgressoCurso> progressoCurso) {
         this.progressoCurso = progressoCurso;
+    }
+
+    public Certificado getModeloCertificado() {
+        return modeloCertificado;
+    }
+
+    public void setModeloCertificado(Certificado modeloCertificado) {
+        this.modeloCertificado = modeloCertificado;
     }
 
     @Override

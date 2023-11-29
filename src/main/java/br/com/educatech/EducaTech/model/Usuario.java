@@ -25,8 +25,8 @@ public class Usuario {
     private String senha;
     private Long tipoUsuario;
 
-    @OneToOne(mappedBy = "id.usuario")
-    private ProgressoCurso progressoCurso;
+    @OneToMany(mappedBy = "id.usuario")
+    private Set<ProgressoCurso> progressoCurso = new HashSet<>();
 
     @OneToMany(mappedBy = "usuario")
     private Set<ProgressoAula> progressoAula = new HashSet<>();
@@ -84,11 +84,11 @@ public class Usuario {
         return TipoUsuarioEnum.valueOf(tipoUsuario);
     }
 
-    public ProgressoCurso getProgresso() {
+    public Set<ProgressoCurso> getProgressoCurso() {
         return progressoCurso;
     }
 
-    public void setProgresso(ProgressoCurso progressoCurso) {
+    public void setProgressoCurso(Set<ProgressoCurso> progressoCurso) {
         this.progressoCurso = progressoCurso;
     }
 

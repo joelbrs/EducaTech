@@ -2,6 +2,8 @@ package br.com.educatech.EducaTech.controllers;
 
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOIn;
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
+import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoDTO;
+import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoRequestDTO;
 import br.com.educatech.EducaTech.services.CursoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -34,6 +36,11 @@ public class CursoController {
     @PostMapping
     public ResponseEntity<CursoDTOOut> insert(@RequestBody @Valid CursoDTOIn dto) {
         return ResponseEntity.ok(cursoService.insert(dto));
+    }
+
+    @PostMapping(value = "/emitir-certificado")
+    public ResponseEntity<ModeloCertificadoDTO> emitirCertificado(@RequestBody ModeloCertificadoRequestDTO dto) {
+        return ResponseEntity.ok(cursoService.emitirCertificado(dto));
     }
 
     @PutMapping(value = "/{id}")

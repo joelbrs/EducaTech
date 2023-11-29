@@ -1,5 +1,7 @@
 package br.com.educatech.EducaTech.dtos.curso;
 
+import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoDTO;
+
 import java.math.BigDecimal;
 
 public class CursoDTOOut {
@@ -11,6 +13,7 @@ public class CursoDTOOut {
     private String imagem;
     private Integer qtdAulas = 0;
     private Integer qtdModulos = 0;
+    private ModeloCertificadoDTO certificado;
 
     public CursoDTOOut() {}
 
@@ -68,5 +71,13 @@ public class CursoDTOOut {
 
     public void setQtdModulos(Integer qtdModulos) {
         this.qtdModulos = qtdModulos;
+    }
+
+    public ModeloCertificadoDTO getCertificado() {
+        return certificado;
+    }
+
+    public void setCertificado(ModeloCertificadoDTO certificado) {
+        this.certificado = certificado;
     }
 }

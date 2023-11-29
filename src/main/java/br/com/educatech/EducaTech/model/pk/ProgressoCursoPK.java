@@ -4,6 +4,7 @@ import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Usuario;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 import java.io.Serializable;
@@ -12,11 +13,11 @@ import java.util.Objects;
 @Embeddable
 public class ProgressoCursoPK implements Serializable {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
 

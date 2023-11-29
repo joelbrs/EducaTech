@@ -14,7 +14,6 @@ public class ProgressoCurso {
 
     @EmbeddedId
     private ProgressoCursoPK id = new ProgressoCursoPK();
-    private BigDecimal porcentagem;
     private Instant dataConclusao;
     private Long statusCurso;
 
@@ -34,14 +33,6 @@ public class ProgressoCurso {
 
     public void setCurso(Curso curso) {
         id.setCurso(curso);
-    }
-
-    public BigDecimal getPorcentagem() {
-        return porcentagem;
-    }
-
-    public void setPorcentagem(BigDecimal porcentagem) {
-        this.porcentagem = porcentagem;
     }
 
     public Instant getDataConclusao() {
