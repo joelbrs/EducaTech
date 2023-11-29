@@ -6,6 +6,7 @@ import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoDTO;
 import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoRequestDTO;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.enums.StatusCurso;
+import br.com.educatech.EducaTech.model.Certificado;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.ProgressoCurso;
 import br.com.educatech.EducaTech.repositories.AulaRepository;
@@ -84,13 +85,12 @@ public class CursoService {
     public ModeloCertificadoDTO emitirCertificado(ModeloCertificadoRequestDTO req) {
         CursoDTOOut dto = finalizar(req.getIdCurso(), req.getIdUsuario());
 
-        //TODO: VERIFICAR NULL
-        return modelMapper.map(certificadoRepository.findById(dto.getCertificado().getId()), ModeloCertificadoDTO.class);
+        return modelMapper.map(dto.getCertificado(), ModeloCertificadoDTO.class);
     }
 
     @Transactional
     public CursoDTOOut finalizar(Long idCurso, Long idUsuario) {
-        ProgressoCurso progresso = progressoCursoRepository.findByIdCourseAndIdUser(idCurso, idUsuario);
+        ProgressoCurso progresso = progressoCursoRepository.findByIdCourseAndIdUser(idCurso, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException("Progresso nao encontrado! idCurso: " + idCurso + ", idUsuario: " + idUsuario));
         progresso.setStatusCurso(StatusCurso.COMPLETO.getCode());
         progresso.setDataConclusao(Instant.now());
 
