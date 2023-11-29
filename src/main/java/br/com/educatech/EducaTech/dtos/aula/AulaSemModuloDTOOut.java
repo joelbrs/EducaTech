@@ -5,24 +5,34 @@ import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 
 public class AulaSemModuloDTOOut {
 
+    private Long id;
     private String titulo;
     private String descricao;
-    private Boolean assistida;
     private Integer ordem;
     private String video;
     private Long idCurso;
     private Long idModulo;
+    private Boolean assistida;
 
     public AulaSemModuloDTOOut() {}
 
-    public AulaSemModuloDTOOut(AulaDTOOut dto) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public AulaSemModuloDTOOut(AulaDTOOut dto, boolean assistida) {
+        this.id = dto.getId();
         this.titulo = dto.getTitulo();
         this.descricao = dto.getDescricao();
-        this.assistida = dto.getAssistida();
         this.ordem = dto.getOrdem();
         this.video = dto.getVideo();
         this.idCurso = dto.getCurso().getId();
         this.idModulo = dto.getModulo().getId();
+        this.assistida = assistida;
     }
 
     public String getTitulo() {
@@ -41,20 +51,20 @@ public class AulaSemModuloDTOOut {
         this.descricao = descricao;
     }
 
-    public Boolean getAssistida() {
-        return assistida;
-    }
-
-    public void setAssistida(Boolean assistida) {
-        this.assistida = assistida;
-    }
-
     public Integer getOrdem() {
         return ordem;
     }
 
     public void setOrdem(Integer ordem) {
         this.ordem = ordem;
+    }
+
+    public Boolean getAssistida() {
+        return assistida;
+    }
+
+    public void setAssistida(Boolean assistida) {
+        this.assistida = assistida;
     }
 
     public String getVideo() {

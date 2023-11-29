@@ -5,19 +5,18 @@ import br.com.educatech.EducaTech.dtos.aula.AulaDTOOut;
 import br.com.educatech.EducaTech.model.Aula;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Modulo;
+import br.com.educatech.EducaTech.model.ProgressoAula;
 import br.com.educatech.EducaTech.repositories.AulaRepository;
 import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.repositories.ModuloRepository;
+import br.com.educatech.EducaTech.repositories.ProgressoAulaRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,12 +26,14 @@ public class AulaService {
     private final ModelMapper modelMapper;
     private final CursoRepository cursoRepository;
     private final ModuloRepository moduloRepository;
+    private final ProgressoAulaRepository progressoAulaRepository;
 
-    public AulaService(AulaRepository aulaRepository, ModelMapper modelMapper, CursoRepository cursoRepository, ModuloRepository moduloRepository) {
+    public AulaService(AulaRepository aulaRepository, ModelMapper modelMapper, CursoRepository cursoRepository, ModuloRepository moduloRepository, ProgressoAulaRepository progressoAulaRepository) {
         this.aulaRepository = aulaRepository;
         this.modelMapper = modelMapper;
         this.cursoRepository = cursoRepository;
         this.moduloRepository = moduloRepository;
+        this.progressoAulaRepository = progressoAulaRepository;
     }
 
     @Transactional(readOnly = true)
@@ -66,7 +67,7 @@ public class AulaService {
         if (!aulas.isEmpty()) {
             for (Aula a : aulas) {
                 if (a.getOrdem().equals(ordem)) {
-                    Aula aula = new Aula(a.getCurso(), a.getModulo(), a.getTitulo(), a.getDescricao(), a.getAssistida(), a.getOrdem(), a.getVideo());
+                    Aula aula = new Aula(a.getCurso(), a.getModulo(), a.getTitulo(), a.getDescricao(), a.getOrdem(), a.getVideo());
                     return modelMapper.map(aula, AulaDTOOut.class);
                 }
             }
@@ -84,6 +85,11 @@ public class AulaService {
         return aula.getOrdem() + 1;
     }
 
+    @Transactional(readOnly = true)
+    public Boolean verificarAulaAssistida(Long idAula, Long idUsuario) {
+        ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException(idAula));
+        return progressoAula.getAssistida();
+    }
 
     @Transactional
     public AulaDTOOut insert(AulaDTOIn dto) {
@@ -93,7 +99,6 @@ public class AulaService {
         Aula aula = modelMapper.map(dto, Aula.class);
         aula.setCurso(curso);
         aula.setModulo(modulo);
-        aula.setAssistida(Boolean.FALSE);
         return modelMapper.map(aulaRepository.save(aula), AulaDTOOut.class);
     }
 
@@ -110,6 +115,14 @@ public class AulaService {
         aula.setOrdem(dto.getOrdem());
 
         return modelMapper.map(aulaRepository.save(aula), AulaDTOOut.class);
+    }
+
+    @Transactional
+    public AulaDTOOut marcarComoAssistida(Long idAula, Long idUsuario) {
+        ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException(idAula));
+        progressoAula.setAssistida(Boolean.TRUE);
+
+        return modelMapper.map(progressoAula.getAula(), AulaDTOOut.class);
     }
 
     public void delete(Long idCurso, Long idModulo, Integer ordem) {

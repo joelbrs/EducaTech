@@ -2,7 +2,11 @@ package br.com.educatech.EducaTech.services;
 
 import br.com.educatech.EducaTech.dtos.usuario.UsuarioDTOIn;
 import br.com.educatech.EducaTech.dtos.usuario.UsuarioDTOOut;
+import br.com.educatech.EducaTech.model.Aula;
+import br.com.educatech.EducaTech.model.ProgressoAula;
 import br.com.educatech.EducaTech.model.Usuario;
+import br.com.educatech.EducaTech.repositories.AulaRepository;
+import br.com.educatech.EducaTech.repositories.ProgressoAulaRepository;
 import br.com.educatech.EducaTech.repositories.UsuarioRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,15 +16,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final ModelMapper modelMapper;
+    private final AulaRepository aulaRepository;
+    private final ProgressoAulaRepository progressoAulaRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper, AulaRepository aulaRepository, ProgressoAulaRepository progressoAulaRepository) {
         this.usuarioRepository = usuarioRepository;
         this.modelMapper = modelMapper;
+        this.aulaRepository = aulaRepository;
+        this.progressoAulaRepository = progressoAulaRepository;
     }
 
     @Transactional(readOnly = true)
@@ -41,7 +51,14 @@ public class UsuarioService {
     @Transactional
     public UsuarioDTOOut insert(UsuarioDTOIn dto) {
         Usuario u = new Usuario(dto.getCpf(), dto.getNome(), dto.getEmail(), dto.getSenhaNova());
-        return modelMapper.map(usuarioRepository.save(u), UsuarioDTOOut.class);
+        usuarioRepository.save(u);
+        List<Aula> aulas = aulaRepository.findAll();
+
+        for (Aula a : aulas) {
+            progressoAulaRepository.save(new ProgressoAula(null, u, a, Boolean.FALSE));
+        }
+
+        return modelMapper.map(u, UsuarioDTOOut.class);
     }
 
     public UsuarioDTOOut login(String email, String senha) throws Exception{

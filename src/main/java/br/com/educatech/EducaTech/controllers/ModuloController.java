@@ -33,9 +33,10 @@ public class ModuloController {
         return ResponseEntity.ok(moduloService.findAllByCourse(idCurso));
     }
 
-    @GetMapping(value = "/aulas/{idCurso}")
-    public ResponseEntity<List<ModuloComAulasDTOOut>> findAllByIdCourseWithClasses(@PathVariable Long idCurso) {
-        return ResponseEntity.ok(moduloService.findAllByIdCourseWithClasses(idCurso));
+    @GetMapping(value = "/aulas/{idCurso}/{idUsuario}")
+    public ResponseEntity<List<ModuloComAulasDTOOut>> findAllByIdCourseWithClasses(@PathVariable Long idCurso,
+                                                                                   @PathVariable Long idUsuario) {
+        return ResponseEntity.ok(moduloService.findAllByIdCourseWithClasses(idCurso, idUsuario));
     }
 
     @GetMapping(value = "/proxima-ordem/{idCurso}")

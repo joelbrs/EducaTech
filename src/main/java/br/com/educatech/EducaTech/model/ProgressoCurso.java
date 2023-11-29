@@ -1,7 +1,7 @@
 package br.com.educatech.EducaTech.model;
 
 import br.com.educatech.EducaTech.enums.StatusCurso;
-import br.com.educatech.EducaTech.model.pk.ProgressoPK;
+import br.com.educatech.EducaTech.model.pk.ProgressoCursoPK;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -9,17 +9,16 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_progresso")
-public class Progresso {
+@Table(name = "tb_progresso_curso")
+public class ProgressoCurso {
 
     @EmbeddedId
-    private ProgressoPK id = new ProgressoPK();
+    private ProgressoCursoPK id = new ProgressoCursoPK();
     private BigDecimal porcentagem;
     private Instant dataConclusao;
-    private BigDecimal pontuacaoFinal;
     private Long statusCurso;
 
-    public Progresso() {}
+    public ProgressoCurso() {}
 
     public Usuario getUsuario() {
         return id.getUsuario();
@@ -53,14 +52,6 @@ public class Progresso {
         this.dataConclusao = dataConclusao;
     }
 
-    public BigDecimal getPontuacaoFinal() {
-        return pontuacaoFinal;
-    }
-
-    public void setPontuacaoFinal(BigDecimal pontuacaoFinal) {
-        this.pontuacaoFinal = pontuacaoFinal;
-    }
-
     public StatusCurso getStatusCurso() throws Exception {
         return StatusCurso.valueOf(statusCurso);
     }
@@ -75,8 +66,8 @@ public class Progresso {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Progresso progresso = (Progresso) o;
-        return Objects.equals(id, progresso.id);
+        ProgressoCurso progressoCurso = (ProgressoCurso) o;
+        return Objects.equals(id, progressoCurso.id);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class Modulo {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    @OneToMany(mappedBy = "id.modulo")
+    @OneToMany(mappedBy = "modulo")
     private Set<Aula> aulas = new HashSet<>();
 
     public Modulo() {}

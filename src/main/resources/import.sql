@@ -1,5 +1,5 @@
 INSERT INTO tb_usuario (cpf, nome, email, senha, tipo_usuario) VALUES ('12345678900', 'Educatech', 'admin@educatech.com', '12345', 2)
-INSERT INTO tb_usuario (cpf, nome, email, senha, tipo_usuario) VALUES ('98765432100', 'Joel da Silva Pereira Filho', 'aluno@educatech.com', '12345', 1)
+INSERT INTO tb_usuario (cpf, nome, email, senha, tipo_usuario) VALUES ('98765432100', 'Aluno EducaTec', 'aluno@educatech.com', '12345', 1)
 
 INSERT INTO tb_curso (titulo, descricao, carga_horaria, imagem) VALUES ('Docker', 'Você vai aprender como criar, administrar ambientes isolados através de containers com o Docker', 80, 'https://cdn.vuetifyjs.com/images/john.jpg')
 INSERT INTO tb_curso (titulo, descricao, carga_horaria, imagem) VALUES ('Kubernetes', 'Aprenda a orquestrar e gerenciar aplicativos em contêineres com Kubernetes', 90, 'https://cdn.vuetifyjs.com/images/john.jpg');
@@ -44,72 +44,135 @@ INSERT INTO tb_modulo (titulo, descricao, ordem, curso_id, material_id) VALUES (
 INSERT INTO tb_modulo (titulo, descricao, ordem, curso_id, material_id) VALUES ('Aprendizado Não Supervisionado', 'Algoritmos e práticas de aprendizado não supervisionado', 3, 5, 1);
 INSERT INTO tb_modulo (titulo, descricao, ordem, curso_id, material_id) VALUES ('Avaliação de Modelos', 'Métricas e estratégias de avaliação de modelos ML', 4, 5, 1);
 
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Docker', 'Visão geral e vantagens do Docker', 0, 1, 1, 1, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Comandos Básicos', 'Comandos essenciais para gerenciar containers', 0, 2, 1, 1, 'https://www.youtube.com/embed/DFT3UCmJIC4?si=bSYRRI7sHWO4ZE4N')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Volumes e Persistência', 'Trabalhando com volumes e persistência de dados', 0, 3, 1, 1, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Redes Docker', 'Gerenciamento e configuração de redes no Docker', 0, 1, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Dockerfile: Construindo Imagens', 'Utilização de Dockerfile para construir imagens', 0, 2, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Publicando Imagens', 'Publicação e compartilhamento de imagens Docker', 0, 3, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Docker Compose: Orquestração de Serviços', 'Utilização do Docker Compose para gerenciar múltiplos containers', 0, 4, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Segurança no Docker', 'Práticas e considerações de segurança no uso do Docker', 0, 1, 1, 3, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Ferramentas Avançadas', 'Exploração de ferramentas e recursos avançados do Docker', 0, 2, 1, 3, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Backup e Recuperação de Dados', 'Estratégias e práticas para backup e recuperação de dados em containers', 0, 4, 1, 3, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Docker Swarm: Orquestração de Clusters', 'Utilização do Docker Swarm para orquestrar clusters de containers', 0, 1, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Casos de Uso Avançados', 'Apresentação de casos de uso avançados e soluções com Docker', 0, 2, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Melhores Práticas com Docker', 'Melhores práticas e dicas para uso eficaz do Docker', 0, 3, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('CI/CD com Docker', 'Integração e entrega contínua utilizando Docker', 0, 4, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Docker e Kubernetes', 'Integração e uso conjunto de Docker e Kubernetes', 0, 1, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Gestão de Configurações com Docker', 'Gerenciamento e automação de configurações com Docker', 0, 2, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Docker e Segurança Cibernética', 'Considerações e práticas de segurança cibernética com Docker', 0, 3, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Autenticação e Autorização com Docker', 'Práticas e estratégias de autenticação e autorização em containers', 0, 4, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Docker', 'Visão geral e vantagens do Docker', 1, 1, 1, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Comandos Básicos', 'Comandos essenciais para gerenciar containers', 2, 1, 1, 'https://www.youtube.com/embed/DFT3UCmJIC4?si=bSYRRI7sHWO4ZE4N')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Volumes e Persistência', 'Trabalhando com volumes e persistência de dados', 3, 1, 1, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Redes Docker', 'Gerenciamento e configuração de redes no Docker', 1, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Dockerfile: Construindo Imagens', 'Utilização de Dockerfile para construir imagens', 2, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Publicando Imagens', 'Publicação e compartilhamento de imagens Docker', 3, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Docker Compose: Orquestração de Serviços', 'Utilização do Docker Compose para gerenciar múltiplos containers', 4, 1, 2, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Segurança no Docker', 'Práticas e considerações de segurança no uso do Docker', 1, 1, 3, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Ferramentas Avançadas', 'Exploração de ferramentas e recursos avançados do Docker', 2, 1, 3, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Backup e Recuperação de Dados', 'Estratégias e práticas para backup e recuperação de dados em containers', 4, 1, 3, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Docker Swarm: Orquestração de Clusters', 'Utilização do Docker Swarm para orquestrar clusters de containers', 1, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Casos de Uso Avançados', 'Apresentação de casos de uso avançados e soluções com Docker', 2, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Melhores Práticas com Docker', 'Melhores práticas e dicas para uso eficaz do Docker', 3, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0')
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('CI/CD com Docker', 'Integração e entrega contínua utilizando Docker', 4, 1, 4, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Docker e Kubernetes', 'Integração e uso conjunto de Docker e Kubernetes', 1, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Gestão de Configurações com Docker', 'Gerenciamento e automação de configurações com Docker', 2, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Docker e Segurança Cibernética', 'Considerações e práticas de segurança cibernética com Docker', 3, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Autenticação e Autorização com Docker', 'Práticas e estratégias de autenticação e autorização em containers', 4, 1, 5, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
 
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Kubernetes', 'Visão geral e vantagens do Kubernetes', 0, 1, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Arquitetura do Kubernetes', 'Entendendo a arquitetura do Kubernetes', 0, 2, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Implantação de Clusters', 'Implantação e configuração de clusters Kubernetes', 0, 3, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Kubectl: Ferramenta de Linha de Comando', 'Utilização do Kubectl para interagir com clusters', 0, 4, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Kubernetes Dashboard', 'Configuração e uso do painel de controle Kubernetes', 0, 1, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Implantação e Gerenciamento de Aplicações', 'Implantação e gerenciamento de aplicações no Kubernetes', 0, 2, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Escalonamento e Autoescalonamento', 'Estratégias de escalonamento e autoescalonamento no Kubernetes', 0, 3, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Gerenciamento de Estado', 'Gerenciamento de estado e persistência de dados no Kubernetes', 0, 4, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Monitoramento e Logs', 'Monitoramento e obtenção de logs em clusters Kubernetes', 0, 1, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Atualizações e Rollbacks', 'Estratégias para atualizações e rollbacks de aplicações', 0, 2, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Segurança no Kubernetes', 'Práticas e considerações de segurança em ambientes Kubernetes', 0, 3, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Redes Avançadas no Kubernetes', 'Configurações e práticas avançadas de rede no Kubernetes', 0, 4, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Kubernetes em Ambientes de Produção', 'Desafios e melhores práticas para ambientes de produção', 0, 1, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Casos de Uso Avançados', 'Exploração de casos de uso avançados com Kubernetes', 0, 2, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Kubernetes em Ambientes de Desenvolvimento', 'Uso e otimizações para ambientes de desenvolvimento', 0, 3, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Melhores Práticas com Kubernetes', 'Dicas e práticas recomendadas para uso eficaz do Kubernetes', 0, 4, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Kubernetes', 'Visão geral e vantagens do Kubernetes', 1, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Arquitetura do Kubernetes', 'Entendendo a arquitetura do Kubernetes', 2, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Implantação de Clusters', 'Implantação e configuração de clusters Kubernetes', 3, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Kubectl: Ferramenta de Linha de Comando', 'Utilização do Kubectl para interagir com clusters', 4, 2, 8, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Kubernetes Dashboard', 'Configuração e uso do painel de controle Kubernetes', 1, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Implantação e Gerenciamento de Aplicações', 'Implantação e gerenciamento de aplicações no Kubernetes', 2, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Escalonamento e Autoescalonamento', 'Estratégias de escalonamento e autoescalonamento no Kubernetes', 3, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Gerenciamento de Estado', 'Gerenciamento de estado e persistência de dados no Kubernetes', 4, 2, 9, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Monitoramento e Logs', 'Monitoramento e obtenção de logs em clusters Kubernetes', 1, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Atualizações e Rollbacks', 'Estratégias para atualizações e rollbacks de aplicações', 2, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Segurança no Kubernetes', 'Práticas e considerações de segurança em ambientes Kubernetes', 3, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Redes Avançadas no Kubernetes', 'Configurações e práticas avançadas de rede no Kubernetes', 4, 2, 10, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Kubernetes em Ambientes de Produção', 'Desafios e melhores práticas para ambientes de produção', 1, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Casos de Uso Avançados', 'Exploração de casos de uso avançados com Kubernetes', 2, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Kubernetes em Ambientes de Desenvolvimento', 'Uso e otimizações para ambientes de desenvolvimento', 3, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Melhores Práticas com Kubernetes', 'Dicas e práticas recomendadas para uso eficaz do Kubernetes', 4, 2, 11, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
 
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Python', 'Visão geral e conceitos básicos de Python', 0, 1, 3, 15, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Estruturas de Dados em Python', 'Exploração de estruturas de dados em Python', 0, 2, 3, 15, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Funções e Módulos', 'Uso de funções e módulos em Python', 0, 3, 3, 15, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Trabalhando com Strings', 'Manipulação e métodos para strings em Python', 0, 4, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Estruturas de Controle em Python', 'Uso de estruturas de controle em Python', 0, 5, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Tratamento de Exceções', 'Manejo e tratamento de exceções em Python', 0, 6, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Iteradores e Geradores', 'Utilização de iteradores e geradores em Python', 0, 7, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Arquivos em Python', 'Manipulação e operações com arquivos em Python', 0, 8, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Programação Orientada a Objetos', 'Conceitos e práticas de POO em Python', 0, 9, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Testes em Python', 'Estratégias e ferramentas para testes em Python', 0, 10, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Frameworks e Bibliotecas', 'Exploração de frameworks e bibliotecas Python', 0, 11, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Projetos e Aplicações', 'Desenvolvimento de projetos e aplicações em Python', 0, 12, 3, 18, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Python', 'Visão geral e conceitos básicos de Python', 1, 3, 15, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Estruturas de Dados em Python', 'Exploração de estruturas de dados em Python', 2, 3, 15, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Funções e Módulos', 'Uso de funções e módulos em Python', 3, 3, 15, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Trabalhando com Strings', 'Manipulação e métodos para strings em Python', 4, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Estruturas de Controle em Python', 'Uso de estruturas de controle em Python', 5, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Tratamento de Exceções', 'Manejo e tratamento de exceções em Python', 6, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Iteradores e Geradores', 'Utilização de iteradores e geradores em Python', 7, 3, 16, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Arquivos em Python', 'Manipulação e operações com arquivos em Python', 8, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Programação Orientada a Objetos', 'Conceitos e práticas de POO em Python', 9, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Testes em Python', 'Estratégias e ferramentas para testes em Python', 10, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Frameworks e Bibliotecas', 'Exploração de frameworks e bibliotecas Python', 11, 3, 17, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Projetos e Aplicações', 'Desenvolvimento de projetos e aplicações em Python', 12, 3, 18, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
 
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao React', 'Visão geral e princípios básicos do React', 0, 1, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Componentes em React', 'Uso e criação de componentes em React', 0, 2, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('State e Props', 'Gerenciamento de estado e propriedades em React', 0, 3, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Hooks em React', 'Utilização de hooks para estados em React', 0, 4, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('React Router', 'Navegação e gerenciamento de rotas em React', 0, 5, 4, 23, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Context API', 'Utilização da Context API em aplicações React', 0, 6, 4, 23, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Redux em React', 'Gerenciamento de estado com Redux em React', 0, 7, 4, 24, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Estilização em React', 'Técnicas e ferramentas para estilização em React', 0, 8, 4, 24, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Testes em React', 'Estratégias e ferramentas para testes em React', 0, 9, 4, 24, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Desempenho em React', 'Melhoria de desempenho e otimização em React', 0, 10, 4, 25, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Aplicações Práticas em React', 'Desenvolvimento de aplicações completas em React', 0, 11, 4, 25, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao React', 'Visão geral e princípios básicos do React', 1, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Componentes em React', 'Uso e criação de componentes em React', 2, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('State e Props', 'Gerenciamento de estado e propriedades em React', 3, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Hooks em React', 'Utilização de hooks para estados em React', 4, 4, 22, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('React Router', 'Navegação e gerenciamento de rotas em React', 5, 4, 23, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Context API', 'Utilização da Context API em aplicações React', 6, 4, 23, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Redux em React', 'Gerenciamento de estado com Redux em React', 7, 4, 24, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Estilização em React', 'Técnicas e ferramentas para estilização em React', 8, 4, 24, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Testes em React', 'Estratégias e ferramentas para testes em React', 9, 4, 24, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Desempenho em React', 'Melhoria de desempenho e otimização em React', 10, 4, 25, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Aplicações Práticas em React', 'Desenvolvimento de aplicações completas em React', 11, 4, 25, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
 
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Machine Learning', 'Visão geral e fundamentos do Machine Learning', 0, 1, 5, 29, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Aprendizado Supervisionado', 'Conceitos e algoritmos de aprendizado supervisionado', 0, 2, 5, 29, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Aprendizado Não Supervisionado', 'Conceitos e algoritmos de aprendizado não supervisionado', 0, 3, 5, 29, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Aprendizado por Reforço', 'Conceitos e algoritmos de aprendizado por reforço', 0, 4, 5, 30, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Redes Neurais', 'Fundamentos e aplicações de redes neurais', 0, 5, 5, 30, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
-INSERT INTO tb_aula (titulo, descricao, assistida, ordem, curso_id, modulo_id, video) VALUES ('Processamento de Linguagem Natural', 'Aplicações de Machine Learning em NLP', 0, 6, 5, 30, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Introdução ao Machine Learning', 'Visão geral e fundamentos do Machine Learning', 1, 5, 29, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Aprendizado Supervisionado', 'Conceitos e algoritmos de aprendizado supervisionado', 2, 5, 29, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Aprendizado Não Supervisionado', 'Conceitos e algoritmos de aprendizado não supervisionado', 3, 5, 29, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Aprendizado por Reforço', 'Conceitos e algoritmos de aprendizado por reforço', 4, 5, 30, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Redes Neurais', 'Fundamentos e aplicações de redes neurais', 5, 5, 30, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
+INSERT INTO tb_aula (titulo, descricao, ordem, curso_id, modulo_id, video) VALUES ('Processamento de Linguagem Natural', 'Aplicações de Machine Learning em NLP', 6, 5, 30, 'https://www.youtube.com/embed/xKJmEC5ieOk?rel=0&amp;showinfo=0');
 
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 1, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 2, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 3, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 4, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 5, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 6, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 7, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 8, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 9, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 10, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 11, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 12, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 13, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 14, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 15, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 16, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 17, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 18, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 19, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 20, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 21, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 22, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 23, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 24, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 25, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 26, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 27, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 28, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 29, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 30, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 31, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 32, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 33, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 34, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 35, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 36, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 37, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 38, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 39, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 40, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 41, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 42, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 43, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 44, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 45, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 46, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 47, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 48, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 49, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 50, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 51, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 52, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 53, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 54, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 55, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 56, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 57, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 58, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 59, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 60, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 61, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 62, 2)
+INSERT INTO tb_progresso_aula (assistida, aula_id, usuario_id) VALUES (0, 63, 2)
 

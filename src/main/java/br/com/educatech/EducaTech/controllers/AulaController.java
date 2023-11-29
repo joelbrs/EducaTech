@@ -59,6 +59,12 @@ public class AulaController {
         return ResponseEntity.ok(aulaService.update(idCurso, idModulo, ordem, dto));
     }
 
+    @PutMapping(value = "/assistida/{idAula}/{idUsuario}")
+    public ResponseEntity<AulaDTOOut> marcarComoAssistida(@PathVariable Long idAula,
+                                                          @PathVariable Long idUsuario) {
+        return ResponseEntity.ok(aulaService.marcarComoAssistida(idAula, idUsuario));
+    }
+
     @DeleteMapping(value = "/{idCurso}/{idModulo}/{ordem}")
     public ResponseEntity<Void> delete(@PathVariable Long idCurso,
                                        @PathVariable Long idModulo,

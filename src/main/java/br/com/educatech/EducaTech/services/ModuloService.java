@@ -5,6 +5,7 @@ import br.com.educatech.EducaTech.dtos.aula.AulaSemModuloDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloComAulasDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOIn;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
+import br.com.educatech.EducaTech.model.Aula;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Material;
 import br.com.educatech.EducaTech.model.Modulo;
@@ -52,11 +53,12 @@ public class ModuloService {
     }
 
     @Transactional(readOnly = true)
-    public List<ModuloComAulasDTOOut> findAllByIdCourseWithClasses(Long idCourse) {
+    public List<ModuloComAulasDTOOut> findAllByIdCourseWithClasses(Long idCourse, Long idUsuario) {
         List<ModuloComAulasDTOOut> modulos = findAll(null, null).stream().map(m -> modelMapper.map(m, ModuloComAulasDTOOut.class)).toList();
 
         for (ModuloComAulasDTOOut m : modulos) {
-            m.setAulas(aulaService.findAllByCourseAndModule(idCourse, m.getId()).stream().map(AulaSemModuloDTOOut::new).toList());
+            List<AulaDTOOut> aulas = aulaService.findAllByCourseAndModule(idCourse, m.getId());
+            m.setAulas(aulas.stream().map(a -> new AulaSemModuloDTOOut(a, aulaService.verificarAulaAssistida(a.getId(), idUsuario))).toList());
         }
         return modulos;
     }

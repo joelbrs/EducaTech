@@ -3,7 +3,10 @@ package br.com.educatech.EducaTech.model;
 import br.com.educatech.EducaTech.enums.TipoUsuarioEnum;
 import jakarta.persistence.*;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -23,7 +26,10 @@ public class Usuario {
     private Long tipoUsuario;
 
     @OneToOne(mappedBy = "id.usuario")
-    private Progresso progresso;
+    private ProgressoCurso progressoCurso;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<ProgressoAula> progressoAula = new HashSet<>();
 
     public Usuario() {}
 
@@ -78,17 +84,21 @@ public class Usuario {
         return TipoUsuarioEnum.valueOf(tipoUsuario);
     }
 
-    public Progresso getProgresso() {
-        return progresso;
+    public ProgressoCurso getProgresso() {
+        return progressoCurso;
     }
 
-    public void setProgresso(Progresso progresso) {
-        this.progresso = progresso;
+    public void setProgresso(ProgressoCurso progressoCurso) {
+        this.progressoCurso = progressoCurso;
     }
 
     @PrePersist
     public void setTipoUsuario() {
         this.tipoUsuario = TipoUsuarioEnum.ALUNO.getCode();
+    }
+
+    public Set<ProgressoAula> getProgressoAula() {
+        return Collections.unmodifiableSet(progressoAula);
     }
 
     @Override

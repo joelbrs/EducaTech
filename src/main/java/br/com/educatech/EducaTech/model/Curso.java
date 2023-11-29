@@ -22,14 +22,14 @@ public class Curso {
     @Column(columnDefinition = "TEXT")
     private String imagem;
 
-    @OneToMany(mappedBy = "id.curso")
+    @OneToMany(mappedBy = "curso")
     private Set<Aula> aulas = new HashSet<>();
 
     @OneToMany(mappedBy = "curso")
     private Set<Modulo> modulos = new HashSet<>();
 
     @OneToOne(mappedBy = "id.curso")
-    private Progresso progresso;
+    private ProgressoCurso progressoCurso;
 
     public Curso() {}
 
@@ -81,12 +81,12 @@ public class Curso {
         return Collections.unmodifiableSet(aulas);
     }
 
-    public Progresso getProgresso() {
-        return progresso;
+    public ProgressoCurso getProgresso() {
+        return progressoCurso;
     }
 
-    public void setProgresso(Progresso progresso) {
-        this.progresso = progresso;
+    public void setProgresso(ProgressoCurso progressoCurso) {
+        this.progressoCurso = progressoCurso;
     }
 
     @Override

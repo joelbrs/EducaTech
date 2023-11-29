@@ -17,9 +17,9 @@ public interface AulaRepository extends JpaRepository<Aula, Long> {
     @Query("SELECT a FROM Aula a")
     Page<Aula> findAllPaged(String titulo, Pageable pageable);
 
-    @Query("SELECT a FROM Aula a WHERE a.id.curso.id = :idCurso and a.id.modulo.id = :idModulo and a.id.ordem = (SELECT MAX(a2.id.ordem) FROM Aula a2 where a2.id.curso.id = :idCurso and a2.id.modulo.id = :idModulo)")
+    @Query("SELECT a FROM Aula a WHERE a.curso.id = :idCurso and a.modulo.id = :idModulo and a.ordem = (SELECT MAX(a2.ordem) FROM Aula a2 where a2.curso.id = :idCurso and a2.modulo.id = :idModulo)")
     Optional<Aula> findAulaWithMaxOrder(Long idCurso, Long idModulo);
 
-    @Query("SELECT a FROM Aula a WHERE a.id.curso.id = :idCurso AND a.id.modulo.id = :idModulo")
+    @Query("SELECT a FROM Aula a WHERE a.curso.id = :idCurso AND a.modulo.id = :idModulo")
     List<Aula> findAllByCourseAndModule(Long idCurso, Long idModulo);
 }

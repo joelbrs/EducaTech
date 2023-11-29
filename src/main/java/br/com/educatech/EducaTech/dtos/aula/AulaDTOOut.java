@@ -5,6 +5,7 @@ import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 
 public class AulaDTOOut {
 
+    private Long id;
     private CursoDTOOut curso;
     private ModuloDTOOut modulo;
     private String titulo;
@@ -14,6 +15,14 @@ public class AulaDTOOut {
     private String video;
 
     public AulaDTOOut() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public CursoDTOOut getCurso() {
         return curso;

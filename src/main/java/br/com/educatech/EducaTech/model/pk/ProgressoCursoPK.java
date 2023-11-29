@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class ProgressoPK implements Serializable {
+public class ProgressoCursoPK implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "usuario_id")
@@ -20,7 +20,7 @@ public class ProgressoPK implements Serializable {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    public ProgressoPK() {}
+    public ProgressoCursoPK() {}
 
     public Usuario getUsuario() {
         return usuario;
@@ -42,7 +42,7 @@ public class ProgressoPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProgressoPK that = (ProgressoPK) o;
+        ProgressoCursoPK that = (ProgressoCursoPK) o;
         return Objects.equals(usuario, that.usuario) && Objects.equals(curso, that.curso);
     }
 
