@@ -2,21 +2,14 @@ package br.com.educatech.EducaTech.services;
 
 import br.com.educatech.EducaTech.dtos.aula.AulaDTOIn;
 import br.com.educatech.EducaTech.dtos.aula.AulaDTOOut;
-import br.com.educatech.EducaTech.model.Aula;
-import br.com.educatech.EducaTech.model.Curso;
-import br.com.educatech.EducaTech.model.Modulo;
-import br.com.educatech.EducaTech.model.ProgressoAula;
-import br.com.educatech.EducaTech.repositories.AulaRepository;
-import br.com.educatech.EducaTech.repositories.CursoRepository;
-import br.com.educatech.EducaTech.repositories.ModuloRepository;
-import br.com.educatech.EducaTech.repositories.ProgressoAulaRepository;
+import br.com.educatech.EducaTech.model.*;
+import br.com.educatech.EducaTech.repositories.*;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,13 +20,15 @@ public class AulaService {
     private final CursoRepository cursoRepository;
     private final ModuloRepository moduloRepository;
     private final ProgressoAulaRepository progressoAulaRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public AulaService(AulaRepository aulaRepository, ModelMapper modelMapper, CursoRepository cursoRepository, ModuloRepository moduloRepository, ProgressoAulaRepository progressoAulaRepository) {
+    public AulaService(AulaRepository aulaRepository, ModelMapper modelMapper, CursoRepository cursoRepository, ModuloRepository moduloRepository, ProgressoAulaRepository progressoAulaRepository, UsuarioRepository usuarioRepository) {
         this.aulaRepository = aulaRepository;
         this.modelMapper = modelMapper;
         this.cursoRepository = cursoRepository;
         this.moduloRepository = moduloRepository;
         this.progressoAulaRepository = progressoAulaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Transactional(readOnly = true)
@@ -99,17 +94,20 @@ public class AulaService {
         Aula aula = modelMapper.map(dto, Aula.class);
         aula.setCurso(curso);
         aula.setModulo(modulo);
+
+        List<Usuario> usuarios = usuarioRepository.findAll();
+
+        for (Usuario u : usuarios) {
+            progressoAulaRepository.save(new ProgressoAula(null, u, aula, Boolean.FALSE));
+        }
         return modelMapper.map(aulaRepository.save(aula), AulaDTOOut.class);
     }
 
     @Transactional
-    public AulaDTOOut update(Long idCurso, Long idModulo, Integer ordem, AulaDTOIn dto) {
-        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso nao encontrado, ID: " + dto.getCurso())), Curso.class);
-        Modulo modulo = modelMapper.map(moduloRepository.findById(dto.getModulo()).orElseThrow(()->new RecursoNaoEncontradoException("Módulo não encontrado!")), Modulo.class);
-
-        Aula aula = modelMapper.map(findByCourseModuleAndOrder(idCurso, idModulo, ordem), Aula.class);
-        aula.setCurso(curso);
-        aula.setModulo(modulo);
+    public AulaDTOOut update(Long id, AulaDTOIn dto) {
+        Aula aula = aulaRepository.getReferenceById(id);
+        aula.setCurso(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException(dto.getCurso())));
+        aula.setModulo(moduloRepository.findById(dto.getModulo()).orElseThrow(() -> new RecursoNaoEncontradoException(dto.getModulo())));
         aula.setTitulo(dto.getTitulo());
         aula.setDescricao(dto.getDescricao());
         aula.setOrdem(dto.getOrdem());
@@ -126,7 +124,13 @@ public class AulaService {
     }
 
     public void delete(Long idCurso, Long idModulo, Integer ordem) {
-        Aula aula = modelMapper.map(findByCourseModuleAndOrder(idCurso, idModulo, ordem), Aula.class);
-        aulaRepository.delete(aula);
+        AulaDTOOut aula = findByCourseModuleAndOrder(idCurso, idModulo, ordem);
+        if (aula != null) {
+            aulaRepository.delete(modelMapper.map(aula, Aula.class));
+        }
+    }
+
+    public List<AulaDTOOut> findAllByModule(Long id) {
+        return aulaRepository.findAllByModule(id).stream().map(a -> modelMapper.map(a, AulaDTOOut.class)).toList();
     }
 }

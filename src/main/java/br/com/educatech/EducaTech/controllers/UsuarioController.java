@@ -19,13 +19,6 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping
-    public ResponseEntity<Page<UsuarioDTOOut>> findAllPaged(@RequestParam(required = false) String cpf,
-                                                            @RequestParam(required = false) String nome,
-                                                            Pageable pageable) {
-        return ResponseEntity.ok(usuarioService.findAllPaged(cpf, nome, pageable));
-    }
-
     @GetMapping("/login")
     public ResponseEntity<UsuarioDTOOut> login(@RequestParam(required = true) String email,
                                       @RequestParam(required = true) String senha) throws Exception {

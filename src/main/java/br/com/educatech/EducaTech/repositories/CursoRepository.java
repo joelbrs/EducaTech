@@ -9,7 +9,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long> {
-
-    @Query("select c from Curso c where ( :titulo is null or lower(c.titulo) like lower(concat('%', :titulo, '%')) ) ")
-    Page<Curso> findAllPaged(String titulo, Pageable pageable);
 }

@@ -34,7 +34,7 @@ public class CursoController {
     }
 
     @PostMapping
-    public ResponseEntity<CursoDTOOut> insert(@RequestBody @Valid CursoDTOIn dto) {
+    public ResponseEntity<CursoDTOOut> insert(@RequestBody @Valid CursoDTOIn dto) throws Exception {
         return ResponseEntity.ok(cursoService.insert(dto));
     }
 

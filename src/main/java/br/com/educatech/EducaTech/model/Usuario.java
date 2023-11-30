@@ -25,7 +25,7 @@ public class Usuario {
     private String senha;
     private Long tipoUsuario;
 
-    @OneToMany(mappedBy = "id.usuario")
+    @OneToMany(mappedBy = "usuario")
     private Set<ProgressoCurso> progressoCurso = new HashSet<>();
 
     @OneToMany(mappedBy = "usuario")

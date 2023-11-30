@@ -22,13 +22,13 @@ public class Curso {
     @Column(columnDefinition = "TEXT")
     private String imagem;
 
-    @OneToMany(mappedBy = "curso")
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.REMOVE)
     private Set<Aula> aulas = new HashSet<>();
 
-    @OneToMany(mappedBy = "curso")
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.REMOVE)
     private Set<Modulo> modulos = new HashSet<>();
 
-    @OneToMany(mappedBy = "id.curso")
+    @OneToMany(mappedBy = "curso")
     private Set<ProgressoCurso> progressoCurso = new HashSet<>();
 
     @ManyToOne

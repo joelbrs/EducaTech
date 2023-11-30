@@ -51,12 +51,10 @@ public class AulaController {
         return ResponseEntity.ok(aulaService.insert(dto));
     }
 
-    @PutMapping(value = "/{idCurso}/{idModulo}/{ordem}")
-    public ResponseEntity<AulaDTOOut> update(@PathVariable Long idCurso,
-                                             @PathVariable Long idModulo,
-                                             @PathVariable Integer ordem,
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<AulaDTOOut> update(@PathVariable Long id,
                                              @RequestBody AulaDTOIn dto) {
-        return ResponseEntity.ok(aulaService.update(idCurso, idModulo, ordem, dto));
+        return ResponseEntity.ok(aulaService.update(id, dto));
     }
 
     @PutMapping(value = "/assistida/{idAula}/{idUsuario}")

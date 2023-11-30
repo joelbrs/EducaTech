@@ -24,6 +24,12 @@ public class Certificado {
 
     public Certificado() {}
 
+    public Certificado(String nome, String arquivo, Curso curso) {
+        this.nome = nome;
+        this.arquivo = arquivo;
+        this.cursos.add(curso);
+    }
+
     public Long getId() {
         return id;
     }

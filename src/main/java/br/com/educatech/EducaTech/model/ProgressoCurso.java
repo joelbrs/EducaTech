@@ -1,10 +1,8 @@
 package br.com.educatech.EducaTech.model;
 
 import br.com.educatech.EducaTech.enums.StatusCurso;
-import br.com.educatech.EducaTech.model.pk.ProgressoCursoPK;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -12,27 +10,52 @@ import java.util.Objects;
 @Table(name = "tb_progresso_curso")
 public class ProgressoCurso {
 
-    @EmbeddedId
-    private ProgressoCursoPK id = new ProgressoCursoPK();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
+
     private Instant dataConclusao;
     private Long statusCurso;
 
     public ProgressoCurso() {}
 
-    public Usuario getUsuario() {
-        return id.getUsuario();
+    public ProgressoCurso(Usuario usuario, Curso curso) {
+        this.curso = curso;
+        this.usuario = usuario;
+        this.statusCurso = 1L;
+        this.dataConclusao = null;
     }
 
-    public Curso getCurso() {
-        return id.getCurso();
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
-        id.setUsuario(usuario);
+        this.usuario = usuario;
+    }
+
+    public Curso getCurso() {
+        return curso;
     }
 
     public void setCurso(Curso curso) {
-        id.setCurso(curso);
+        this.curso = curso;
     }
 
     public Instant getDataConclusao() {

@@ -33,12 +33,6 @@ public class UsuarioService {
         this.progressoAulaRepository = progressoAulaRepository;
     }
 
-    @Transactional(readOnly = true)
-    public Page<UsuarioDTOOut> findAllPaged(String cpf, String nome, Pageable pageable) {
-        Page<Usuario> usuarios = usuarioRepository.findAllPaged(cpf, nome, pageable);
-        return usuarios.map(u -> modelMapper.map(u, UsuarioDTOOut.class));
-    }
-
     public UsuarioDTOOut findById(Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id));
         return modelMapper.map(usuario, UsuarioDTOOut.class);

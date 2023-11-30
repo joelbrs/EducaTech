@@ -1,13 +1,15 @@
 package br.com.educatech.EducaTech.dtos.aula;
 
 import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
+import br.com.educatech.EducaTech.dtos.curso.CursoDTOSemArquivo;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
+import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOSemArquivo;
 
 public class AulaDTOOut {
 
     private Long id;
-    private CursoDTOOut curso;
-    private ModuloDTOOut modulo;
+    private CursoDTOSemArquivo curso;
+    private ModuloDTOSemArquivo modulo;
     private String titulo;
     private String descricao;
     private Boolean assistida;
@@ -24,19 +26,19 @@ public class AulaDTOOut {
         this.id = id;
     }
 
-    public CursoDTOOut getCurso() {
+    public CursoDTOSemArquivo getCurso() {
         return curso;
     }
 
-    public void setCurso(CursoDTOOut curso) {
+    public void setCurso(CursoDTOSemArquivo curso) {
         this.curso = curso;
     }
 
-    public ModuloDTOOut getModulo() {
+    public ModuloDTOSemArquivo getModulo() {
         return modulo;
     }
 
-    public void setModulo(ModuloDTOOut modulo) {
+    public void setModulo(ModuloDTOSemArquivo modulo) {
         this.modulo = modulo;
     }
 

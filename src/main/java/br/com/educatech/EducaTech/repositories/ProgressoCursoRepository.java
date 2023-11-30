@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ProgressoCursoRepository extends JpaRepository<ProgressoCurso, Long> {
 
-    @Query("select p from ProgressoCurso p where p.id.curso.id = :idCurso and p.id.usuario.id = :idUsuario")
+    @Query("select p from ProgressoCurso p where p.curso.id = :idCurso and p.usuario.id = :idUsuario")
     Optional<ProgressoCurso> findByIdCourseAndIdUser(Long idCurso, Long idUsuario);
 }

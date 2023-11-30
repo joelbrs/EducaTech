@@ -9,10 +9,8 @@ import br.com.educatech.EducaTech.enums.StatusCurso;
 import br.com.educatech.EducaTech.model.Certificado;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.ProgressoCurso;
-import br.com.educatech.EducaTech.repositories.AulaRepository;
-import br.com.educatech.EducaTech.repositories.CertificadoRepository;
-import br.com.educatech.EducaTech.repositories.CursoRepository;
-import br.com.educatech.EducaTech.repositories.ProgressoCursoRepository;
+import br.com.educatech.EducaTech.model.Usuario;
+import br.com.educatech.EducaTech.repositories.*;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -31,14 +29,16 @@ public class CursoService {
     private final AulaRepository aulaRepository;
     private final ProgressoCursoRepository progressoCursoRepository;
     private final CertificadoRepository certificadoRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public CursoService(CursoRepository cursoRepository, ModelMapper modelMapper, ModuloService moduloService, AulaRepository aulaRepository, ProgressoCursoRepository progressoCursoRepository, CertificadoRepository certificadoRepository) {
+    public CursoService(CursoRepository cursoRepository, ModelMapper modelMapper, ModuloService moduloService, AulaRepository aulaRepository, ProgressoCursoRepository progressoCursoRepository, CertificadoRepository certificadoRepository, UsuarioRepository usuarioRepository) {
         this.cursoRepository = cursoRepository;
         this.modelMapper = modelMapper;
         this.moduloService = moduloService;
         this.aulaRepository = aulaRepository;
         this.progressoCursoRepository = progressoCursoRepository;
         this.certificadoRepository = certificadoRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Transactional(readOnly = true)
@@ -77,8 +77,16 @@ public class CursoService {
 
     @Transactional
     public CursoDTOOut insert(CursoDTOIn dto) {
-        Curso curso = cursoRepository.save(modelMapper.map(dto, Curso.class));
-        return modelMapper.map(curso, CursoDTOOut.class);
+        Curso curso = modelMapper.map(dto, Curso.class);
+
+        Certificado certificado = certificadoRepository.save(new Certificado(dto.getModeloCertificado().getNome(), dto.getModeloCertificado().getArquivo(), curso));
+        curso.setModeloCertificado(certificado);
+
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        for (Usuario u : usuarios) {
+            progressoCursoRepository.save(new ProgressoCurso(u, curso));
+        }
+        return modelMapper.map(cursoRepository.save(curso), CursoDTOOut.class);
     }
 
     @Transactional
@@ -116,11 +124,6 @@ public class CursoService {
     public void delete(Long id) {
         try {
             Curso curso = cursoRepository.getReferenceById(id);
-            List<ModuloDTOOut> modulos = moduloService.findAllByCourse(id);
-
-            for (ModuloDTOOut m : modulos) {
-                moduloService.delete(m.getId());
-            }
 
             cursoRepository.delete(curso);
         }

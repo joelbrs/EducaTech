@@ -15,6 +15,7 @@ import br.com.educatech.EducaTech.repositories.ModuloRepository;
 import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -114,16 +115,8 @@ public class ModuloService {
 
     public void delete(Long id) {
         try {
-            Modulo modulo = moduloRepository.getReferenceById(id);
-            List<AulaDTOOut> aulas = aulaService.findAllByCourseAndModule(modulo.getCurso().getId(), id);
-
-            for (AulaDTOOut a : aulas) {
-                aulaService.delete(a.getCurso().getId(), a.getModulo().getId(), a.getOrdem());
-            }
-
-            moduloRepository.delete(modulo);
-        }
-        catch (EntityNotFoundException e) {
+            moduloRepository.deleteById(id);
+        } catch (EntityNotFoundException e) {
             throw new RecursoNaoEncontradoException(id);
         }
     }
