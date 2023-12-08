@@ -6,6 +6,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+
+/**
+ * Classe de Configuração Geral de Segurança da apicação
+ * */
 @Configuration
 public class SecurityConfig {
     @Bean
