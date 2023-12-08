@@ -114,6 +114,11 @@ public class Usuario {
         this.progressoCurso = progressoCurso;
     }
 
+
+    /**
+     * A cada vez que um objeto Usuário é persistido no Banco de Dados, automaticamente, o Tipo de Usuário dele é setado
+     * como ALUNO
+     * */
     @PrePersist
     public void setTipoUsuario() {
         this.tipoUsuario = TipoUsuarioEnum.ALUNO.getCode();
