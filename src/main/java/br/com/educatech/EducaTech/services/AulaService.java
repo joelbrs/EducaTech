@@ -12,8 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Camada de Serviço da Entidade Aula, responsável pelas regras de negócio da aplicação em relação a essa Entidade
+ * */
 @Service
 public class AulaService {
+
+    /**
+     * Injeção de Dependências
+     * */
 
     private final AulaRepository aulaRepository;
     private final ModelMapper modelMapper;
@@ -31,8 +38,11 @@ public class AulaService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    /**
+     * Método que busca todas as aulas, inclusive, podendo (ou não) filtrar por Título ou Curso e/ou Módulo
+     * */
     @Transactional(readOnly = true)
-    public List<AulaDTOOut> findAll(String titulo, Long idCurso, Long idModulo) {
+    public List<AulaDTOOut> buscarTodos(String titulo, Long idCurso, Long idModulo) {
         List<Aula> aulas = aulaRepository.findAll();
 
         if (titulo != null && !titulo.isBlank()) {
@@ -50,13 +60,19 @@ public class AulaService {
         return aulas.stream().map(a -> modelMapper.map(a, AulaDTOOut.class)).collect(Collectors.toList());
     }
 
+    /**
+     * Método que busca todas as aulas por Curso e Módulo
+     * */
     @Transactional(readOnly = true)
-    public List<AulaDTOOut> findAllByCourseAndModule(Long idCurso, Long idModulo) {
+    public List<AulaDTOOut> buscarPorCursoeModulo(Long idCurso, Long idModulo) {
         List<Aula> aulas = aulaRepository.findAllByCourseAndModule(idCurso, idModulo);
         return aulas.stream().map(a -> modelMapper.map(a, AulaDTOOut.class)).collect(Collectors.toList());
     }
 
-    public AulaDTOOut findByCourseModuleAndOrder(Long idCurso, Long idModulo, Integer ordem) {
+    /**
+     * Método que busca uma Aula por Curso, Módulo e Ordem
+     * */
+    public AulaDTOOut buscarPorCursoModuloeOrdem(Long idCurso, Long idModulo, Integer ordem) {
         List<Aula> aulas = aulaRepository.findAllByCourseAndModule(idCurso, idModulo);
 
         if (!aulas.isEmpty()) {
@@ -70,8 +86,11 @@ public class AulaService {
         throw new RecursoNaoEncontradoException("Aula não encontrada!");
     }
 
+    /**
+     * Método que busca a próxima ordem disponível para a aula a ser cadastrada
+     * */
     @Transactional(readOnly = true)
-    public Integer findNextOrder(Long idCurso, Long idModulo) {
+    public Integer buscarProximaOrdem(Long idCurso, Long idModulo) {
         Aula aula = aulaRepository.findAulaWithMaxOrder(idCurso, idModulo).orElse(null);
 
         if (aula == null) {
@@ -80,14 +99,20 @@ public class AulaService {
         return aula.getOrdem() + 1;
     }
 
+    /**
+     * Método que verifica se uma Aula foi assistida pelo Usuário informado
+     * */
     @Transactional(readOnly = true)
     public Boolean verificarAulaAssistida(Long idAula, Long idUsuario) {
         ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException(idAula));
         return progressoAula.getAssistida();
     }
 
+    /**
+     * Método que cria uma nova aula seguindo os atributos da Entidade
+     * */
     @Transactional
-    public AulaDTOOut insert(AulaDTOIn dto) {
+    public AulaDTOOut inserir(AulaDTOIn dto) {
         Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso nao encontrado, ID: " + dto.getCurso())), Curso.class);
         Modulo modulo = modelMapper.map(moduloRepository.findById(dto.getModulo()).orElseThrow(()->new RecursoNaoEncontradoException("Módulo não encontrado!")), Modulo.class);
 
@@ -97,14 +122,20 @@ public class AulaService {
 
         List<Usuario> usuarios = usuarioRepository.findAll();
 
+        /**
+         * Atribuindo o acesso a essa aula para todos os usuários
+         * */
         for (Usuario u : usuarios) {
             progressoAulaRepository.save(new ProgressoAula(null, u, aula, Boolean.FALSE));
         }
         return modelMapper.map(aulaRepository.save(aula), AulaDTOOut.class);
     }
 
+    /**
+     * Método que edita uma aula
+     * */
     @Transactional
-    public AulaDTOOut update(Long id, AulaDTOIn dto) {
+    public AulaDTOOut editar(Long id, AulaDTOIn dto) {
         Aula aula = aulaRepository.getReferenceById(id);
         aula.setCurso(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException(dto.getCurso())));
         aula.setModulo(moduloRepository.findById(dto.getModulo()).orElseThrow(() -> new RecursoNaoEncontradoException(dto.getModulo())));
@@ -115,6 +146,9 @@ public class AulaService {
         return modelMapper.map(aulaRepository.save(aula), AulaDTOOut.class);
     }
 
+    /**
+     * Método que marca uma aula como assistida por um usuário
+     * */
     @Transactional
     public AulaDTOOut marcarComoAssistida(Long idAula, Long idUsuario) {
         ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException(idAula));
@@ -123,14 +157,13 @@ public class AulaService {
         return modelMapper.map(progressoAula.getAula(), AulaDTOOut.class);
     }
 
+    /**
+     * Método que deleta uma aula
+     * */
     public void delete(Long idCurso, Long idModulo, Integer ordem) {
-        AulaDTOOut aula = findByCourseModuleAndOrder(idCurso, idModulo, ordem);
+        AulaDTOOut aula = buscarPorCursoModuloeOrdem(idCurso, idModulo, ordem);
         if (aula != null) {
             aulaRepository.delete(modelMapper.map(aula, Aula.class));
         }
-    }
-
-    public List<AulaDTOOut> findAllByModule(Long id) {
-        return aulaRepository.findAllByModule(id).stream().map(a -> modelMapper.map(a, AulaDTOOut.class)).toList();
     }
 }

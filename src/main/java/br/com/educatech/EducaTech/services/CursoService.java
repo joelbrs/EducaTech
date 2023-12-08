@@ -20,9 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * Camada de Serviço da Entidade Curso, responsável pelas regras de negócio da aplicação em relação a essa Entidade
+ * */
 @Service
 public class CursoService {
 
+    /**
+     * Injeção de Dependências
+     * */
     private final CursoRepository cursoRepository;
     private final ModelMapper modelMapper;
     private final ModuloService moduloService;
@@ -41,13 +47,16 @@ public class CursoService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    /**
+     * Método que busca todas os Cursos, inclusive, podendo (ou não) filtrar por Título
+     * */
     @Transactional(readOnly = true)
-    public List<CursoDTOOut> findAll(String titulo) {
+    public List<CursoDTOOut> buscarTodos(String titulo) {
         List<Curso> cursos = cursoRepository.findAll();
         List<CursoDTOOut> dtos = cursos.stream().map(c -> modelMapper.map(c, CursoDTOOut.class)).toList();
 
         for (CursoDTOOut c : dtos) {
-            List<ModuloDTOOut> modulos = moduloService.findAllByCourse(c.getId());
+            List<ModuloDTOOut> modulos = moduloService.buscarTodosPorCurso(c.getId());
             c.setQtdModulos(modulos.size());
 
             for (ModuloDTOOut m : modulos) {
@@ -62,11 +71,14 @@ public class CursoService {
         return dtos;
     }
 
-    public CursoDTOOut findById(Long id) {
+    /**
+     * Método que busca um curso pelo seu identificador único
+     * */
+    public CursoDTOOut buscarPorId(Long id) {
         Curso curso = cursoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id));
         CursoDTOOut dto = modelMapper.map(curso, CursoDTOOut.class);
 
-        List<ModuloDTOOut> modulos = moduloService.findAllByCourse(id);
+        List<ModuloDTOOut> modulos = moduloService.buscarTodosPorCurso(id);
         dto.setQtdModulos(modulos.size());
 
         for (ModuloDTOOut m : modulos) {
@@ -75,20 +87,30 @@ public class CursoService {
         return dto;
     }
 
+    /**
+     * Método que cria um curso a partir dos atributos da Entidade
+     * */
     @Transactional
-    public CursoDTOOut insert(CursoDTOIn dto) {
+    public CursoDTOOut inserir(CursoDTOIn dto) {
         Curso curso = modelMapper.map(dto, Curso.class);
 
         Certificado certificado = certificadoRepository.save(new Certificado(dto.getModeloCertificado().getNome(), dto.getModeloCertificado().getArquivo(), curso));
         curso.setModeloCertificado(certificado);
 
         List<Usuario> usuarios = usuarioRepository.findAll();
+
+        /**
+         * Atribuindo acesso a esse Curso por todos os usuários
+         * */
         for (Usuario u : usuarios) {
             progressoCursoRepository.save(new ProgressoCurso(u, curso));
         }
         return modelMapper.map(cursoRepository.save(curso), CursoDTOOut.class);
     }
 
+    /**
+     * Método para emissão do certificado de um curso
+     * */
     @Transactional
     public ModeloCertificadoDTO emitirCertificado(ModeloCertificadoRequestDTO req) {
         CursoDTOOut dto = finalizar(req.getIdCurso(), req.getIdUsuario());
@@ -96,6 +118,9 @@ public class CursoService {
         return modelMapper.map(dto.getCertificado(), ModeloCertificadoDTO.class);
     }
 
+    /**
+     * Método que busca um curso pelo seu identificador único
+     * */
     @Transactional
     public CursoDTOOut finalizar(Long idCurso, Long idUsuario) {
         ProgressoCurso progresso = progressoCursoRepository.findByIdCourseAndIdUser(idCurso, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException("Progresso nao encontrado! idCurso: " + idCurso + ", idUsuario: " + idUsuario));
@@ -103,9 +128,12 @@ public class CursoService {
         progresso.setDataConclusao(Instant.now());
 
         progressoCursoRepository.save(progresso);
-        return findById(idCurso);
+        return buscarPorId(idCurso);
     }
 
+    /**
+     * Método que edita um curso
+     * */
     @Transactional
     public CursoDTOOut update(Long id, CursoDTOIn dto) {
         try {
@@ -121,6 +149,9 @@ public class CursoService {
         }
     }
 
+    /**
+     * Método que deleta um curso
+     * */
     public void delete(Long id) {
         try {
             Curso curso = cursoRepository.getReferenceById(id);

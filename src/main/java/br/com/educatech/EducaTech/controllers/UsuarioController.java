@@ -26,17 +26,17 @@ public class UsuarioController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UsuarioDTOOut> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(usuarioService.findById(id));
+    public ResponseEntity<UsuarioDTOOut> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(usuarioService.buscarPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTOOut> insert(@RequestBody @Valid UsuarioDTOIn dto) {
-        return ResponseEntity.ok(usuarioService.insert(dto));
+    public ResponseEntity<UsuarioDTOOut> inserir(@RequestBody @Valid UsuarioDTOIn dto) {
+        return ResponseEntity.ok(usuarioService.inserir(dto));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UsuarioDTOOut> update(@PathVariable Long id, @RequestBody @Valid UsuarioDTOIn dto) throws Exception {
-        return ResponseEntity.ok(usuarioService.update(id, dto));
+    public ResponseEntity<UsuarioDTOOut> editar(@PathVariable Long id, @RequestBody @Valid UsuarioDTOIn dto) throws Exception {
+        return ResponseEntity.ok(usuarioService.editar(id, dto));
     }
 }

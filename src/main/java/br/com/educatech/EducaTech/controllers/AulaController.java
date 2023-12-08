@@ -22,39 +22,39 @@ public class AulaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AulaDTOOut>> findAll(@RequestParam(required = false) String titulo,
+    public ResponseEntity<List<AulaDTOOut>> buscarTodos(@RequestParam(required = false) String titulo,
                                                     @RequestParam(required = false) Long idCurso,
                                                     @RequestParam(required = false) Long idModulo) {
-        return ResponseEntity.ok(aulaService.findAll(titulo, idCurso, idModulo));
+        return ResponseEntity.ok(aulaService.buscarTodos(titulo, idCurso, idModulo));
     }
 
     @GetMapping(value = "/{idCurso}/{idModulo}")
     public ResponseEntity<List<AulaDTOOut>> findAllByCourseAndModule(@PathVariable Long idCurso, @PathVariable Long idModulo) {
-        return ResponseEntity.ok(aulaService.findAllByCourseAndModule(idCurso, idModulo));
+        return ResponseEntity.ok(aulaService.buscarPorCursoeModulo(idCurso, idModulo));
     }
 
     @GetMapping(value = "/{idCurso}/{idModulo}/{ordem}")
     public ResponseEntity<AulaDTOOut> findById(@PathVariable Long idCurso,
                                                @PathVariable Long idModulo,
                                                @PathVariable Integer ordem) {
-        return ResponseEntity.ok(aulaService.findByCourseModuleAndOrder(idCurso, idModulo, ordem));
+        return ResponseEntity.ok(aulaService.buscarPorCursoModuloeOrdem(idCurso, idModulo, ordem));
     }
 
     @GetMapping(value = "/proxima-ordem/{idCurso}/{idModulo}")
     public ResponseEntity<Integer> findNextOrder(@PathVariable Long idCurso,
                                                  @PathVariable Long idModulo) {
-        return ResponseEntity.ok(aulaService.findNextOrder(idCurso, idModulo));
+        return ResponseEntity.ok(aulaService.buscarProximaOrdem(idCurso, idModulo));
     }
 
     @PostMapping
     public ResponseEntity<AulaDTOOut> insert(@RequestBody @Valid AulaDTOIn dto) {
-        return ResponseEntity.ok(aulaService.insert(dto));
+        return ResponseEntity.ok(aulaService.inserir(dto));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<AulaDTOOut> update(@PathVariable Long id,
                                              @RequestBody AulaDTOIn dto) {
-        return ResponseEntity.ok(aulaService.update(id, dto));
+        return ResponseEntity.ok(aulaService.editar(id, dto));
     }
 
     @PutMapping(value = "/assistida/{idAula}/{idUsuario}")

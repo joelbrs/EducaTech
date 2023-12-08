@@ -25,17 +25,17 @@ public class CursoController {
 
     @GetMapping
     public ResponseEntity<List<CursoDTOOut>> findAll(String titulo) {
-        return ResponseEntity.ok(cursoService.findAll(titulo));
+        return ResponseEntity.ok(cursoService.buscarTodos(titulo));
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<CursoDTOOut> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(cursoService.findById(id));
+        return ResponseEntity.ok(cursoService.buscarPorId(id));
     }
 
     @PostMapping
     public ResponseEntity<CursoDTOOut> insert(@RequestBody @Valid CursoDTOIn dto) throws Exception {
-        return ResponseEntity.ok(cursoService.insert(dto));
+        return ResponseEntity.ok(cursoService.inserir(dto));
     }
 
     @PostMapping(value = "/emitir-certificado")

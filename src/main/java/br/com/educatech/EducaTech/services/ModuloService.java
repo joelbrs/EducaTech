@@ -22,9 +22,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Camada de Serviço da Entidade Módulo, responsável pelas regras de negócio da aplicação em relação a essa Entidade
+ * */
 @Service
 public class ModuloService {
 
+    /**
+     * Injeção de Dependências
+     * */
     private final ModuloRepository moduloRepository;
     private final ModelMapper modelMapper;
     private final CursoRepository cursoRepository;
@@ -39,8 +45,11 @@ public class ModuloService {
         this.materialRepository = materialRepository;
     }
 
+    /**
+     * Método que busca todas os Módulos, inclusive, podendo (ou não) filtrar por Título
+     * */
     @Transactional(readOnly = true)
-    public List<ModuloDTOOut> findAll(String titulo, Long idCurso) {
+    public List<ModuloDTOOut> buscarTodos(String titulo, Long idCurso) {
         List<ModuloDTOOut> modulos = moduloRepository.findAll().stream().map(m -> modelMapper.map(m, ModuloDTOOut.class)).toList();
 
         if (titulo != null && !titulo.isBlank()) {
@@ -53,25 +62,34 @@ public class ModuloService {
         return modulos;
     }
 
+    /**
+     * Método que buscar todos os módulos de um curso que possuem aulas cadastradas
+     * */
     @Transactional(readOnly = true)
-    public List<ModuloComAulasDTOOut> findAllByIdCourseWithClasses(Long idCourse, Long idUsuario) {
-        List<ModuloComAulasDTOOut> modulos = findAll(null, null).stream().map(m -> modelMapper.map(m, ModuloComAulasDTOOut.class)).toList();
+    public List<ModuloComAulasDTOOut> buscarTodosComAulasPorIdCurso(Long idCourse, Long idUsuario) {
+        List<ModuloComAulasDTOOut> modulos = buscarTodos(null, null).stream().map(m -> modelMapper.map(m, ModuloComAulasDTOOut.class)).toList();
 
         for (ModuloComAulasDTOOut m : modulos) {
-            List<AulaDTOOut> aulas = aulaService.findAllByCourseAndModule(idCourse, m.getId());
+            List<AulaDTOOut> aulas = aulaService.buscarPorCursoeModulo(idCourse, m.getId());
             m.setAulas(aulas.stream().map(a -> new AulaSemModuloDTOOut(a, aulaService.verificarAulaAssistida(a.getId(), idUsuario))).toList());
         }
         return modulos;
     }
 
+    /**
+     * Método que busca todos os Módulos por Curso
+     * */
     @Transactional(readOnly = true)
-    public List<ModuloDTOOut> findAllByCourse(Long id) {
+    public List<ModuloDTOOut> buscarTodosPorCurso(Long id) {
         List<Modulo> modulos = moduloRepository.findAllByIdCourse(id);
         return modulos.stream().map(m -> modelMapper.map(m, ModuloDTOOut.class)).collect(Collectors.toList());
     }
 
+    /**
+     * Método que busca a próxima ordem de um curso
+     * */
     @Transactional(readOnly = true)
-    public Integer findNextOrder(Long idCurso) {
+    public Integer buscarProximaOrdem(Long idCurso) {
         Modulo modulo = moduloRepository.findModuleWithMaxOrder(idCurso).orElse(null);
 
         if (modulo == null) {
@@ -80,14 +98,20 @@ public class ModuloService {
         return modulo.getOrdem() + 1;
     }
 
-    public ModuloDTOOut findById(Long id) {
+    /**
+     * Método que busca um Módulo pelo seu identificador único
+     * */
+    public ModuloDTOOut buscarPorId(Long id) {
         Modulo modulo = moduloRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id));
 
         return modelMapper.map(modulo, ModuloDTOOut.class);
     }
 
+    /**
+     * Método que cria um módulo a partir dos atributos da Entidade
+     * */
     @Transactional
-    public ModuloDTOOut insert(ModuloDTOIn dto) {
+    public ModuloDTOOut inserir(ModuloDTOIn dto) {
         Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso não encontrado!")), Curso.class);
         Modulo modulo = modelMapper.map(dto, Modulo.class);
         modulo.setCurso(curso);
@@ -99,8 +123,11 @@ public class ModuloService {
         return modelMapper.map(moduloRepository.save(modulo), ModuloDTOOut.class);
     }
 
+    /**
+     * Método que edita um módulo
+     * */
     @Transactional
-    public ModuloDTOOut update(Long id, ModuloDTOIn dto) {
+    public ModuloDTOOut editar(Long id, ModuloDTOIn dto) {
         try {
             Modulo modulo = moduloRepository.getReferenceById(id);
             modulo.setTitulo(dto.getTitulo());
@@ -113,6 +140,9 @@ public class ModuloService {
         }
     }
 
+    /**
+     * Método que deleta um curso
+     * */
     public void delete(Long id) {
         try {
             moduloRepository.deleteById(id);
