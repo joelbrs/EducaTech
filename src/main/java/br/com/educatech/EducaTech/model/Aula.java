@@ -7,30 +7,55 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * Entidade Aula, referenciada pela tabela "tb_aula"
+ * */
 @Entity
 @Table(name = "tb_aula")
 public class Aula {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Curso, criando um atributo "curso_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Módulo, criando um atributo "modulo_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "modulo_id")
     private Modulo modulo;
 
     private Integer ordem;
-
     private String titulo;
     private String descricao;
     private String video;
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de ProgressoAula, onde o mapeamento desse relacionamento foi realizado
+     * na entidade ProgressoAula
+     * */
     @OneToMany(mappedBy = "aula")
     private Set<ProgressoAula> progressoAulas = new HashSet<>();
+
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public Aula() {}
 

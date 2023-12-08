@@ -7,9 +7,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * Entidade Aula, referenciada pela tabela "tb_material"
+ * */
 @Entity
 @Table(name = "tb_material")
 public class Material {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +28,16 @@ public class Material {
     private String arquivo;
     private String nome;
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de Módulo, onde o mapeamento desse relacionamento foi realizado
+     * na entidade Módulo
+     * */
     @OneToMany(mappedBy = "material")
     private Set<Modulo> modulos;
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public Material() {}
 

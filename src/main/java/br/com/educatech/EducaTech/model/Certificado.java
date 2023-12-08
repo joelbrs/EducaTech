@@ -7,9 +7,18 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entidade Certificado, referenciada pela tabela "tb_certificado"
+ * */
 @Entity
 @Table(name = "tb_certificado")
 public class Certificado {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +28,17 @@ public class Certificado {
     @Column(columnDefinition = "TEXT")
     private String arquivo;
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade Curso, onde o mapeamento desse relacionamento foi realizado
+     * na entidade Curso
+     * */
     @OneToMany(mappedBy = "modeloCertificado")
     private Set<Curso> cursos = new HashSet<>();
+
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public Certificado() {}
 

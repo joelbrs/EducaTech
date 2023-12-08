@@ -4,22 +4,44 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * Entidade ProgressoAula, referenciada pela tabela "tb_progresso_aula"
+ * */
 @Entity
 @Table(name = "tb_progresso_aula")
 public class ProgressoAula {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Usuário, criando um atributo "usuario_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Aula, criando um atributo "aula_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "aula_id")
     private Aula aula;
     private Boolean assistida;
+
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public ProgressoAula() {}
 

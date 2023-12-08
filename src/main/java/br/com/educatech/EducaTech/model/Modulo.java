@@ -1,6 +1,5 @@
 package br.com.educatech.EducaTech.model;
 
-import br.com.educatech.EducaTech.dtos.curso.CursoDTOOut;
 import jakarta.persistence.*;
 
 import java.util.Collections;
@@ -8,9 +7,19 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+
+/**
+ * Entidade Módulo, referenciada pela tabela "tb_modulo"
+ * */
 @Entity
 @Table(name = "tb_modulo")
 public class Modulo {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,16 +28,33 @@ public class Modulo {
     private String descricao;
     private Integer ordem;
 
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Material, criando um atributo "material_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id")
     private Material material;
 
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Curso, criando um atributo "curso_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de Aula, onde o mapeamento desse relacionamento foi realizado
+     * na entidade Aula
+     * */
     @OneToMany(mappedBy = "modulo")
     private Set<Aula> aulas = new HashSet<>();
+
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public Modulo() {}
 

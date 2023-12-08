@@ -8,9 +8,19 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * Entidade Aula, referenciada pela tabela "tb_aula"
+ * */
 @Entity
 @Table(name = "tb_curso")
 public class Curso {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,18 +32,39 @@ public class Curso {
     @Column(columnDefinition = "TEXT")
     private String imagem;
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de Aula, onde o mapeamento desse relacionamento foi realizado
+     * na entidade Aula
+     * */
     @OneToMany(mappedBy = "curso", cascade = CascadeType.REMOVE)
     private Set<Aula> aulas = new HashSet<>();
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de Módulos, onde o mapeamento desse relacionamento foi realizado
+     * na entidade Módulo
+     * */
     @OneToMany(mappedBy = "curso", cascade = CascadeType.REMOVE)
     private Set<Modulo> modulos = new HashSet<>();
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de ProgressoCurso, onde o mapeamento desse relacionamento foi realizado
+     * na entidade ProgressoCurso
+     * */
     @OneToMany(mappedBy = "curso")
     private Set<ProgressoCurso> progressoCurso = new HashSet<>();
 
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Certificado, criando um atributo "certificado_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "certificado_id")
     private Certificado modeloCertificado;
+
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public Curso() {}
 

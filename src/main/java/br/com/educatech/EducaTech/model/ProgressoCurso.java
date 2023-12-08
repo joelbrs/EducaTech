@@ -6,24 +6,46 @@ import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
 
+
+/**
+ * Entidade ProgressoCurso, referenciada pela tabela "tb_progresso_curso"
+ * */
 @Entity
 @Table(name = "tb_progresso_curso")
 public class ProgressoCurso {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Usuário, criando um atributo "usuario_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    /**
+     * Relacionamento "muitos-para-um" com a entidade Curso, criando um atributo "curso_id" na tabela,
+     * referenciando esse relacionamento
+     * */
     @ManyToOne
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
     private Instant dataConclusao;
     private Long statusCurso;
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public ProgressoCurso() {}
 

@@ -8,9 +8,18 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+
+/**
+ * Entidade Usuário, referenciada pela tabela "tb_usuario"
+ * */
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {
+
+    /**
+     * Atributos da entidade em questão, apresentando, inclusive, seus relacionamentos
+     * com outras entidades do sistema
+     * */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +34,24 @@ public class Usuario {
     private String senha;
     private Long tipoUsuario;
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de ProgressoCurso, onde o mapeamento desse relacionamento foi realizado
+     * na entidade ProgressoCurso
+     * */
     @OneToMany(mappedBy = "usuario")
     private Set<ProgressoCurso> progressoCurso = new HashSet<>();
 
+    /**
+     * Relacionamento "um-para-muitos" com a entidade de ProgressoAula, onde o mapeamento desse relacionamento foi realizado
+     * na entidade ProgressoAula
+     * */
     @OneToMany(mappedBy = "usuario")
     private Set<ProgressoAula> progressoAula = new HashSet<>();
+
+
+    /**
+     * Construtores, Getters & Setters e HashCode & Equals da Entidade e de seus atributos
+     * */
 
     public Usuario() {}
 
