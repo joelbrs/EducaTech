@@ -1,10 +1,13 @@
 package br.com.educatech.EducaTech.enums;
 
+/**
+ * Enumeração para determinar o Tipo de Usuário, podendo ser ALUNO ou ADMIN
+ * */
 public enum TipoUsuarioEnum {
     ALUNO(1L),
     ADMIN(2L);
 
-    private Long code;
+    private final Long code;
 
     TipoUsuarioEnum(Long code) {
         this.code = code;

@@ -1,10 +1,14 @@
 package br.com.educatech.EducaTech.enums;
 
+
+/**
+ * Enumeração para determinar o Status de um Curso, podendo ser INCOMPLETO ou COMPLETO
+ * */
 public enum StatusCurso {
     INCOMPLETO(1L),
     COMPLETO(2L);
 
-    private Long code;
+    private final Long code;
 
     StatusCurso(Long code) {
         this.code = code;
