@@ -11,7 +11,6 @@ import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.ProgressoCurso;
 import br.com.educatech.EducaTech.model.Usuario;
 import br.com.educatech.EducaTech.repositories.*;
-import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -74,8 +73,8 @@ public class CursoService {
     /**
      * Método que busca um curso pelo seu identificador único
      * */
-    public CursoDTOOut buscarPorId(Long id) {
-        Curso curso = cursoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id));
+    public CursoDTOOut buscarPorId(Long id) throws Exception {
+        Curso curso = cursoRepository.findById(id).orElseThrow(() -> new Exception("Curso não encontrado, id: "+ id));
         CursoDTOOut dto = modelMapper.map(curso, CursoDTOOut.class);
 
         List<ModuloDTOOut> modulos = moduloService.buscarTodosPorCurso(id);
@@ -112,7 +111,7 @@ public class CursoService {
      * Método para emissão do certificado de um curso
      * */
     @Transactional
-    public ModeloCertificadoDTO emitirCertificado(ModeloCertificadoRequestDTO req) {
+    public ModeloCertificadoDTO emitirCertificado(ModeloCertificadoRequestDTO req) throws Exception {
         CursoDTOOut dto = finalizar(req.getIdCurso(), req.getIdUsuario());
 
         return modelMapper.map(dto.getCertificado(), ModeloCertificadoDTO.class);
@@ -122,8 +121,8 @@ public class CursoService {
      * Método que busca um curso pelo seu identificador único
      * */
     @Transactional
-    public CursoDTOOut finalizar(Long idCurso, Long idUsuario) {
-        ProgressoCurso progresso = progressoCursoRepository.findByIdCourseAndIdUser(idCurso, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException("Progresso nao encontrado! idCurso: " + idCurso + ", idUsuario: " + idUsuario));
+    public CursoDTOOut finalizar(Long idCurso, Long idUsuario) throws Exception {
+        ProgressoCurso progresso = progressoCursoRepository.findByIdCourseAndIdUser(idCurso, idUsuario).orElseThrow(() -> new Exception("Progresso nao encontrado! idCurso: " + idCurso + ", idUsuario: " + idUsuario));
         progresso.setStatusCurso(StatusCurso.COMPLETO.getCode());
         progresso.setDataConclusao(Instant.now());
 
@@ -135,7 +134,7 @@ public class CursoService {
      * Método que edita um curso
      * */
     @Transactional
-    public CursoDTOOut update(Long id, CursoDTOIn dto) {
+    public CursoDTOOut editar(Long id, CursoDTOIn dto) throws Exception {
         try {
             Curso curso = cursoRepository.getReferenceById(id);
             curso.setTitulo(dto.getTitulo());
@@ -145,21 +144,21 @@ public class CursoService {
             return modelMapper.map(cursoRepository.save(curso), CursoDTOOut.class);
         }
         catch (EntityNotFoundException e) {
-            throw new RecursoNaoEncontradoException(id);
+            throw new Exception("Curso não encontrado, id: "+ id);
         }
     }
 
     /**
      * Método que deleta um curso
      * */
-    public void delete(Long id) {
+    public void delete(Long id) throws Exception {
         try {
             Curso curso = cursoRepository.getReferenceById(id);
 
             cursoRepository.delete(curso);
         }
         catch (EntityNotFoundException e) {
-            throw new RecursoNaoEncontradoException(id);
+            throw new Exception("Curso não encontrado, id: "+ id);
         }
     }
 }

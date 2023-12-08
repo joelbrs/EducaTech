@@ -5,8 +5,6 @@ import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOIn;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
 import br.com.educatech.EducaTech.services.ModuloService;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,22 +43,22 @@ public class ModuloController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ModuloDTOOut> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<ModuloDTOOut> buscarPorId(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(moduloService.buscarPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<ModuloDTOOut> inserir(@RequestBody @Valid ModuloDTOIn dto) {
+    public ResponseEntity<ModuloDTOOut> inserir(@RequestBody @Valid ModuloDTOIn dto) throws Exception {
         return ResponseEntity.ok(moduloService.inserir(dto));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ModuloDTOOut> editar(@PathVariable Long id, @RequestBody @Valid ModuloDTOIn dto) {
+    public ResponseEntity<ModuloDTOOut> editar(@PathVariable Long id, @RequestBody @Valid ModuloDTOIn dto) throws Exception {
         return ResponseEntity.ok(moduloService.editar(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
         moduloService.delete(id);
         return ResponseEntity.noContent().build();
     }

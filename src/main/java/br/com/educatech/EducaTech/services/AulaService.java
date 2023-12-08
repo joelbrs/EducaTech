@@ -4,7 +4,6 @@ import br.com.educatech.EducaTech.dtos.aula.AulaDTOIn;
 import br.com.educatech.EducaTech.dtos.aula.AulaDTOOut;
 import br.com.educatech.EducaTech.model.*;
 import br.com.educatech.EducaTech.repositories.*;
-import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +71,7 @@ public class AulaService {
     /**
      * Método que busca uma Aula por Curso, Módulo e Ordem
      * */
-    public AulaDTOOut buscarPorCursoModuloeOrdem(Long idCurso, Long idModulo, Integer ordem) {
+    public AulaDTOOut buscarPorCursoModuloeOrdem(Long idCurso, Long idModulo, Integer ordem) throws Exception {
         List<Aula> aulas = aulaRepository.findAllByCourseAndModule(idCurso, idModulo);
 
         if (!aulas.isEmpty()) {
@@ -83,7 +82,7 @@ public class AulaService {
                 }
             }
         }
-        throw new RecursoNaoEncontradoException("Aula não encontrada!");
+        throw new Exception("Aula não encontrada");
     }
 
     /**
@@ -103,8 +102,8 @@ public class AulaService {
      * Método que verifica se uma Aula foi assistida pelo Usuário informado
      * */
     @Transactional(readOnly = true)
-    public Boolean verificarAulaAssistida(Long idAula, Long idUsuario) {
-        ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException(idAula));
+    public Boolean verificarAulaAssistida(Long idAula, Long idUsuario) throws Exception {
+        ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new Exception("Aula não encontrada, id: "+ idAula));
         return progressoAula.getAssistida();
     }
 
@@ -112,9 +111,9 @@ public class AulaService {
      * Método que cria uma nova aula seguindo os atributos da Entidade
      * */
     @Transactional
-    public AulaDTOOut inserir(AulaDTOIn dto) {
-        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso nao encontrado, ID: " + dto.getCurso())), Curso.class);
-        Modulo modulo = modelMapper.map(moduloRepository.findById(dto.getModulo()).orElseThrow(()->new RecursoNaoEncontradoException("Módulo não encontrado!")), Modulo.class);
+    public AulaDTOOut inserir(AulaDTOIn dto) throws Exception {
+        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new Exception("Curso nao encontrado, ID: " + dto.getCurso())), Curso.class);
+        Modulo modulo = modelMapper.map(moduloRepository.findById(dto.getModulo()).orElseThrow(()->new Exception("Módulo não encontrado")), Modulo.class);
 
         Aula aula = modelMapper.map(dto, Aula.class);
         aula.setCurso(curso);
@@ -135,10 +134,10 @@ public class AulaService {
      * Método que edita uma aula
      * */
     @Transactional
-    public AulaDTOOut editar(Long id, AulaDTOIn dto) {
+    public AulaDTOOut editar(Long id, AulaDTOIn dto) throws Exception {
         Aula aula = aulaRepository.getReferenceById(id);
-        aula.setCurso(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException(dto.getCurso())));
-        aula.setModulo(moduloRepository.findById(dto.getModulo()).orElseThrow(() -> new RecursoNaoEncontradoException(dto.getModulo())));
+        aula.setCurso(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new Exception("Curso não encontrado, id: "+ dto.getCurso())));
+        aula.setModulo(moduloRepository.findById(dto.getModulo()).orElseThrow(() -> new Exception("Módulo não encontrado, id: "+ dto.getModulo())));
         aula.setTitulo(dto.getTitulo());
         aula.setDescricao(dto.getDescricao());
         aula.setOrdem(dto.getOrdem());
@@ -150,8 +149,8 @@ public class AulaService {
      * Método que marca uma aula como assistida por um usuário
      * */
     @Transactional
-    public AulaDTOOut marcarComoAssistida(Long idAula, Long idUsuario) {
-        ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new RecursoNaoEncontradoException(idAula));
+    public AulaDTOOut marcarComoAssistida(Long idAula, Long idUsuario) throws Exception {
+        ProgressoAula progressoAula = progressoAulaRepository.findByIdAulaAndIdUsuario(idAula, idUsuario).orElseThrow(() -> new Exception("Aula não encontrada, id: "+ idAula));
         progressoAula.setAssistida(Boolean.TRUE);
 
         return modelMapper.map(progressoAula.getAula(), AulaDTOOut.class);
@@ -160,7 +159,7 @@ public class AulaService {
     /**
      * Método que deleta uma aula
      * */
-    public void delete(Long idCurso, Long idModulo, Integer ordem) {
+    public void delete(Long idCurso, Long idModulo, Integer ordem) throws Exception {
         AulaDTOOut aula = buscarPorCursoModuloeOrdem(idCurso, idModulo, ordem);
         if (aula != null) {
             aulaRepository.delete(modelMapper.map(aula, Aula.class));

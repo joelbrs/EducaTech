@@ -8,11 +8,8 @@ import br.com.educatech.EducaTech.model.Usuario;
 import br.com.educatech.EducaTech.repositories.AulaRepository;
 import br.com.educatech.EducaTech.repositories.ProgressoAulaRepository;
 import br.com.educatech.EducaTech.repositories.UsuarioRepository;
-import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,16 +39,16 @@ public class UsuarioService {
     /**
      * Método que busca um usuário pelo seu identificador único
      * */
-    public UsuarioDTOOut buscarPorId(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id));
+    public UsuarioDTOOut buscarPorId(Long id) throws Exception {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new Exception("Usuário não encontrado, id: "+ id));
         return modelMapper.map(usuario, UsuarioDTOOut.class);
     }
 
     /**
      * Método que busca um usuário pelo seu e-mail
      * */
-    public Usuario buscarPorEmail(String email) {
-        return usuarioRepository.findByEmail(email.split("\t")[0]).orElseThrow(() -> new RecursoNaoEncontradoException("Usuario nao encontrado!"));
+    public Usuario buscarPorEmail(String email) throws Exception {
+        return usuarioRepository.findByEmail(email.split("\t")[0]).orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
 
     /**
@@ -99,7 +96,7 @@ public class UsuarioService {
             return modelMapper.map(usuarioRepository.save(usuario), UsuarioDTOOut.class);
         }
         catch (EntityNotFoundException e) {
-            throw new RecursoNaoEncontradoException(id);
+            throw new Exception("Usuário não encontrado, id: "+ id);
         }
     }
 

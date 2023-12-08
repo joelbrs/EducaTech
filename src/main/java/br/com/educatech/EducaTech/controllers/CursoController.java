@@ -6,8 +6,6 @@ import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoDTO;
 import br.com.educatech.EducaTech.dtos.curso.certificado.ModeloCertificadoRequestDTO;
 import br.com.educatech.EducaTech.services.CursoService;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,27 +27,27 @@ public class CursoController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CursoDTOOut> findById(@PathVariable Long id) {
+    public ResponseEntity<CursoDTOOut> findById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(cursoService.buscarPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<CursoDTOOut> insert(@RequestBody @Valid CursoDTOIn dto) throws Exception {
+    public ResponseEntity<CursoDTOOut> insert(@RequestBody @Valid CursoDTOIn dto) {
         return ResponseEntity.ok(cursoService.inserir(dto));
     }
 
     @PostMapping(value = "/emitir-certificado")
-    public ResponseEntity<ModeloCertificadoDTO> emitirCertificado(@RequestBody ModeloCertificadoRequestDTO dto) {
+    public ResponseEntity<ModeloCertificadoDTO> emitirCertificado(@RequestBody ModeloCertificadoRequestDTO dto) throws Exception {
         return ResponseEntity.ok(cursoService.emitirCertificado(dto));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CursoDTOOut> update(@PathVariable Long id, @RequestBody @Valid CursoDTOIn dto) {
-        return ResponseEntity.ok(cursoService.update(id, dto));
+    public ResponseEntity<CursoDTOOut> editar(@PathVariable Long id, @RequestBody @Valid CursoDTOIn dto) throws Exception {
+        return ResponseEntity.ok(cursoService.editar(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
        cursoService.delete(id);
 
        return ResponseEntity.noContent().build();

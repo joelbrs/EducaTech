@@ -5,17 +5,14 @@ import br.com.educatech.EducaTech.dtos.aula.AulaSemModuloDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloComAulasDTOOut;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOIn;
 import br.com.educatech.EducaTech.dtos.modulo.ModuloDTOOut;
-import br.com.educatech.EducaTech.model.Aula;
 import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.Material;
 import br.com.educatech.EducaTech.model.Modulo;
 import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.repositories.MaterialRepository;
 import br.com.educatech.EducaTech.repositories.ModuloRepository;
-import br.com.educatech.EducaTech.services.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +68,13 @@ public class ModuloService {
 
         for (ModuloComAulasDTOOut m : modulos) {
             List<AulaDTOOut> aulas = aulaService.buscarPorCursoeModulo(idCourse, m.getId());
-            m.setAulas(aulas.stream().map(a -> new AulaSemModuloDTOOut(a, aulaService.verificarAulaAssistida(a.getId(), idUsuario))).toList());
+            m.setAulas(aulas.stream().map(a -> {
+                try {
+                    return new AulaSemModuloDTOOut(a, aulaService.verificarAulaAssistida(a.getId(), idUsuario));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).toList());
         }
         return modulos;
     }
@@ -101,8 +104,8 @@ public class ModuloService {
     /**
      * Método que busca um Módulo pelo seu identificador único
      * */
-    public ModuloDTOOut buscarPorId(Long id) {
-        Modulo modulo = moduloRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(id));
+    public ModuloDTOOut buscarPorId(Long id) throws Exception {
+        Modulo modulo = moduloRepository.findById(id).orElseThrow(() -> new Exception("Módulo não encontrado, id: "+ id));
 
         return modelMapper.map(modulo, ModuloDTOOut.class);
     }
@@ -111,8 +114,8 @@ public class ModuloService {
      * Método que cria um módulo a partir dos atributos da Entidade
      * */
     @Transactional
-    public ModuloDTOOut inserir(ModuloDTOIn dto) {
-        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new RecursoNaoEncontradoException("Curso não encontrado!")), Curso.class);
+    public ModuloDTOOut inserir(ModuloDTOIn dto) throws Exception {
+        Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new Exception("Módulo não encontrado")), Curso.class);
         Modulo modulo = modelMapper.map(dto, Modulo.class);
         modulo.setCurso(curso);
 
@@ -127,7 +130,7 @@ public class ModuloService {
      * Método que edita um módulo
      * */
     @Transactional
-    public ModuloDTOOut editar(Long id, ModuloDTOIn dto) {
+    public ModuloDTOOut editar(Long id, ModuloDTOIn dto) throws Exception {
         try {
             Modulo modulo = moduloRepository.getReferenceById(id);
             modulo.setTitulo(dto.getTitulo());
@@ -136,18 +139,18 @@ public class ModuloService {
             return modelMapper.map(modulo, ModuloDTOOut.class);
         }
         catch (EntityNotFoundException e) {
-            throw new RecursoNaoEncontradoException(id);
+            throw new Exception("Módulo não encontrado, id: "+ id);
         }
     }
 
     /**
      * Método que deleta um curso
      * */
-    public void delete(Long id) {
+    public void delete(Long id) throws Exception {
         try {
             moduloRepository.deleteById(id);
         } catch (EntityNotFoundException e) {
-            throw new RecursoNaoEncontradoException(id);
+            throw new Exception("Módulo não encontrado, id: "+ id);
         }
     }
 }

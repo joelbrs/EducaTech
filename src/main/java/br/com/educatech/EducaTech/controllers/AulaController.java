@@ -36,7 +36,7 @@ public class AulaController {
     @GetMapping(value = "/{idCurso}/{idModulo}/{ordem}")
     public ResponseEntity<AulaDTOOut> findById(@PathVariable Long idCurso,
                                                @PathVariable Long idModulo,
-                                               @PathVariable Integer ordem) {
+                                               @PathVariable Integer ordem) throws Exception {
         return ResponseEntity.ok(aulaService.buscarPorCursoModuloeOrdem(idCurso, idModulo, ordem));
     }
 
@@ -47,26 +47,26 @@ public class AulaController {
     }
 
     @PostMapping
-    public ResponseEntity<AulaDTOOut> insert(@RequestBody @Valid AulaDTOIn dto) {
+    public ResponseEntity<AulaDTOOut> insert(@RequestBody @Valid AulaDTOIn dto) throws Exception {
         return ResponseEntity.ok(aulaService.inserir(dto));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<AulaDTOOut> update(@PathVariable Long id,
-                                             @RequestBody AulaDTOIn dto) {
+                                             @RequestBody AulaDTOIn dto) throws Exception {
         return ResponseEntity.ok(aulaService.editar(id, dto));
     }
 
     @PutMapping(value = "/assistida/{idAula}/{idUsuario}")
     public ResponseEntity<AulaDTOOut> marcarComoAssistida(@PathVariable Long idAula,
-                                                          @PathVariable Long idUsuario) {
+                                                          @PathVariable Long idUsuario) throws Exception {
         return ResponseEntity.ok(aulaService.marcarComoAssistida(idAula, idUsuario));
     }
 
     @DeleteMapping(value = "/{idCurso}/{idModulo}/{ordem}")
     public ResponseEntity<Void> delete(@PathVariable Long idCurso,
                                        @PathVariable Long idModulo,
-                                       @PathVariable Integer ordem) {
+                                       @PathVariable Integer ordem) throws Exception {
         aulaService.delete(idCurso, idModulo, ordem);
         return ResponseEntity.noContent().build();
     }
