@@ -8,6 +8,7 @@ import br.com.educatech.EducaTech.model.Usuario;
 import br.com.educatech.EducaTech.repositories.AulaRepository;
 import br.com.educatech.EducaTech.repositories.ProgressoAulaRepository;
 import br.com.educatech.EducaTech.repositories.UsuarioRepository;
+import br.com.educatech.EducaTech.utils.PadraoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.List;
  * Camada de Serviço da Entidade Usuário, responsável pelas regras de negócio da aplicação em relação a essa Entidade
  * */
 @Service
-public class UsuarioService {
+public class UsuarioService implements PadraoService<UsuarioDTOIn, UsuarioDTOOut> {
 
     /**
      * Injeção de Dependências
@@ -34,6 +35,11 @@ public class UsuarioService {
         this.modelMapper = modelMapper;
         this.aulaRepository = aulaRepository;
         this.progressoAulaRepository = progressoAulaRepository;
+    }
+
+    @Override
+    public List<UsuarioDTOOut> buscarTodos() {
+        return usuarioRepository.findAll().stream().map(u -> modelMapper.map(u, UsuarioDTOOut.class)).toList();
     }
 
     /**
@@ -51,9 +57,7 @@ public class UsuarioService {
         return usuarioRepository.findByEmail(email.split("\t")[0]).orElseThrow(() -> new Exception("Usuário não encontrado"));
     }
 
-    /**
-     * Método que cria um usuário a partir dos atributos da Entidade
-     * */
+    @Override
     @Transactional
     public UsuarioDTOOut inserir(UsuarioDTOIn dto) {
         Usuario u = new Usuario(dto.getCpf(), dto.getNome(), dto.getEmail(), dto.getSenhaNova());
@@ -79,9 +83,7 @@ public class UsuarioService {
         return modelMapper.map(usuario, UsuarioDTOOut.class);
     }
 
-    /**
-     * Método que edita um curso
-     * */
+    @Override
     @Transactional
     public UsuarioDTOOut editar(Long id, UsuarioDTOIn dto) throws Exception {
         try {
@@ -109,5 +111,14 @@ public class UsuarioService {
         }
         usuario.setSenha(senhaNova);
         return usuario;
+    }
+
+    @Override
+    public void delete(Long id) throws Exception {
+        try {
+            usuarioRepository.deleteById(id);
+        } catch (EntityNotFoundException e) {
+            throw new Exception("Usuário não encontrado, id: "+ id);
+        }
     }
 }

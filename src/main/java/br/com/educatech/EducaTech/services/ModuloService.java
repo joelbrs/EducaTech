@@ -11,6 +11,7 @@ import br.com.educatech.EducaTech.model.Modulo;
 import br.com.educatech.EducaTech.repositories.CursoRepository;
 import br.com.educatech.EducaTech.repositories.MaterialRepository;
 import br.com.educatech.EducaTech.repositories.ModuloRepository;
+import br.com.educatech.EducaTech.utils.PadraoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  * Camada de Serviço da Entidade Módulo, responsável pelas regras de negócio da aplicação em relação a essa Entidade
  * */
 @Service
-public class ModuloService {
+public class ModuloService implements PadraoService<ModuloDTOIn, ModuloDTOOut> {
 
     /**
      * Injeção de Dependências
@@ -42,8 +43,13 @@ public class ModuloService {
         this.materialRepository = materialRepository;
     }
 
+    @Override
+    public List<ModuloDTOOut> buscarTodos() {
+        return moduloRepository.findAll().stream().map(m -> modelMapper.map(m, ModuloDTOOut.class)).toList();
+    }
+
     /**
-     * Método que busca todas os Módulos, inclusive, podendo (ou não) filtrar por Título
+     * Método que busca todas os Módulos filtrando por Título e/ou Curso
      * */
     @Transactional(readOnly = true)
     public List<ModuloDTOOut> buscarTodos(String titulo, Long idCurso) {
@@ -110,9 +116,7 @@ public class ModuloService {
         return modelMapper.map(modulo, ModuloDTOOut.class);
     }
 
-    /**
-     * Método que cria um módulo a partir dos atributos da Entidade
-     * */
+    @Override
     @Transactional
     public ModuloDTOOut inserir(ModuloDTOIn dto) throws Exception {
         Curso curso = modelMapper.map(cursoRepository.findById(dto.getCurso()).orElseThrow(() -> new Exception("Módulo não encontrado")), Curso.class);
@@ -126,9 +130,7 @@ public class ModuloService {
         return modelMapper.map(moduloRepository.save(modulo), ModuloDTOOut.class);
     }
 
-    /**
-     * Método que edita um módulo
-     * */
+    @Override
     @Transactional
     public ModuloDTOOut editar(Long id, ModuloDTOIn dto) throws Exception {
         try {
@@ -143,9 +145,6 @@ public class ModuloService {
         }
     }
 
-    /**
-     * Método que deleta um curso
-     * */
     public void delete(Long id) throws Exception {
         try {
             moduloRepository.deleteById(id);

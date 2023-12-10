@@ -23,7 +23,7 @@ public class CursoController {
 
     @GetMapping
     public ResponseEntity<List<CursoDTOOut>> findAll(String titulo) {
-        return ResponseEntity.ok(cursoService.buscarTodos(titulo));
+        return ResponseEntity.ok(cursoService.buscarTodosFiltro(titulo));
     }
 
     @GetMapping(value = "/{id}")

@@ -11,6 +11,7 @@ import br.com.educatech.EducaTech.model.Curso;
 import br.com.educatech.EducaTech.model.ProgressoCurso;
 import br.com.educatech.EducaTech.model.Usuario;
 import br.com.educatech.EducaTech.repositories.*;
+import br.com.educatech.EducaTech.utils.PadraoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import java.util.List;
  * Camada de Serviço da Entidade Curso, responsável pelas regras de negócio da aplicação em relação a essa Entidade
  * */
 @Service
-public class CursoService {
+public class CursoService implements PadraoService<CursoDTOIn, CursoDTOOut> {
 
     /**
      * Injeção de Dependências
@@ -46,11 +47,16 @@ public class CursoService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    @Override
+    public List<CursoDTOOut> buscarTodos() {
+        return cursoRepository.findAll().stream().map(c -> modelMapper.map(c, CursoDTOOut.class)).toList();
+    }
+
     /**
-     * Método que busca todas os Cursos, inclusive, podendo (ou não) filtrar por Título
+     * Método que busca todas os Cursos filtrando por Título
      * */
     @Transactional(readOnly = true)
-    public List<CursoDTOOut> buscarTodos(String titulo) {
+    public List<CursoDTOOut> buscarTodosFiltro(String titulo) {
         List<Curso> cursos = cursoRepository.findAll();
         List<CursoDTOOut> dtos = cursos.stream().map(c -> modelMapper.map(c, CursoDTOOut.class)).toList();
 
@@ -74,7 +80,7 @@ public class CursoService {
      * Método que busca um curso pelo seu identificador único
      * */
     public CursoDTOOut buscarPorId(Long id) throws Exception {
-        Curso curso = cursoRepository.findById(id).orElseThrow(() -> new Exception("Curso não encontrado, id: "+ id));
+        Curso curso = cursoRepository.findById(id).orElseThrow(() -> new Exception("Curso não encontrado, id: " + id));
         CursoDTOOut dto = modelMapper.map(curso, CursoDTOOut.class);
 
         List<ModuloDTOOut> modulos = moduloService.buscarTodosPorCurso(id);
@@ -86,9 +92,7 @@ public class CursoService {
         return dto;
     }
 
-    /**
-     * Método que cria um curso a partir dos atributos da Entidade
-     * */
+    @Override
     @Transactional
     public CursoDTOOut inserir(CursoDTOIn dto) {
         Curso curso = modelMapper.map(dto, Curso.class);
@@ -130,9 +134,7 @@ public class CursoService {
         return buscarPorId(idCurso);
     }
 
-    /**
-     * Método que edita um curso
-     * */
+    @Override
     @Transactional
     public CursoDTOOut editar(Long id, CursoDTOIn dto) throws Exception {
         try {
@@ -148,9 +150,7 @@ public class CursoService {
         }
     }
 
-    /**
-     * Método que deleta um curso
-     * */
+    @Override
     public void delete(Long id) throws Exception {
         try {
             Curso curso = cursoRepository.getReferenceById(id);
